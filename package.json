@@ -1,0 +1,82 @@
+{
+  "name": "eml-js",
+  "version": "1.0.1",
+  "description": "format EML file in browser env",
+  "main": "./lib/bundle.umd.js",
+  "module": "./lib/bundle.esm.js",
+  "es2015": "./lib/bundle.esm.js",
+  "esm5": "./lib/bundle.esm.js",
+  "typings": "./dist/index.d.ts",
+  "scripts": {
+    "build": "tsc",
+    "build:es": "tsc -p ./tsconfig.es2015.json",
+    "build:umd": "tsc -p ./tsconfig.umd.json",
+    "build:amd": "tsc -p ./tsconfig.amd.json",
+    "build:ts": "npm run clean:dist && npm run build && npm run build:es -- --declaration false && npm run build:umd -- --declaration false && npm run build:amd",
+    "build:rollup": "rollup --config",
+    "build:publish": "npm run clean:dist && npm run build && npm run build:rollup",
+    "clean:dist": "rimraf dist",
+    "eslint:init": "eslint --init",
+    "lint": "eslint --fix --ext .ts src/",
+    "link:lib": "rimraf node_modules/eml-format-js && linklocal",
+    "prettier": "prettier --parser typescript --write src/*ts && npm run lint",
+    "prepublishOnly": "npm run prettier && npm run build:publish && npm run test",
+    "test": "mocha --reporter spec"
+  },
+  "files": [
+    "src",
+    "dist",
+    "lib"
+  ],
+  "private": false,
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/MQpeng/eml-js.git"
+  },
+  "keywords": [
+    "eml",
+    "eml-format-js",
+    "typescript"
+  ],
+  "author": "superchow",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/MQpeng/eml-js/issues"
+  },
+  "homepage": "https://github.com/MQpeng/eml-js#readme",
+  "devDependencies": {
+    "@types/js-base64": "^2.3.1",
+    "@types/ramda": "^0.26.36",
+    "@types/text-encoding": "0.0.35",
+    "@typescript-eslint/eslint-plugin": "^2.11.0",
+    "@typescript-eslint/parser": "^2.11.0",
+    "chai": "^4.2.0",
+    "eslint": "^6.7.2",
+    "eslint-plugin-prettier": "^3.1.1",
+    "linklocal": "^2.8.2",
+    "lint-staged": "^10.5.3",
+    "mocha": "^6.2.2",
+    "prettier": "1.19.1",
+    "rimraf": "^3.0.0",
+    "rollup": "^1.27.12",
+    "rollup-plugin-commonjs": "^10.1.0",
+    "rollup-plugin-node-resolve": "^5.2.0",
+    "rollup-plugin-typescript": "^1.0.1",
+    "typescript": "^3.7.3"
+  },
+  "dependencies": {
+    "js-base64": "^2.5.1",
+    "ramda": "^0.26.1",
+    "text-encoding": "^0.7.0"
+  },
+  "gitHooks": {
+    "pre-commit": "lint-staged"
+  },
+  "lint-staged": {
+    "src/**/*.ts": [
+      "npm run lint",
+      "prettier --parser typescript --write",
+      "git add"
+    ]
+  }
+}

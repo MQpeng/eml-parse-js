@@ -1,0 +1,4 @@
+./test/builed/*.eml
+./test/eml-rebuild/*.eml
+./test/parsed/**
+./test/readed/**

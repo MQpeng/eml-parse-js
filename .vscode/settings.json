@@ -1,0 +1,6 @@
+{
+    "eslint.alwaysShowStatus": true,
+    "editor.tabSize": 2,
+    "eslint.lintTask.enable": true,
+    "tslint.jsEnable": true
+}

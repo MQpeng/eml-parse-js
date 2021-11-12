@@ -1,0 +1,48 @@
+{
+	"root": true,
+	"env": {
+		"browser": true,
+		"es6": true
+	},
+	"extends": [
+		// "eslint:all",
+		"eslint:recommended",
+		"plugin:@typescript-eslint/eslint-recommended"
+	],
+	"globals": {
+		"Atomics": "readonly",
+		"SharedArrayBuffer": "readonly"
+	},
+	"parser": "@typescript-eslint/parser",
+	"parserOptions": {
+		"ecmaVersion": 2018,
+		"sourceType": "module"
+	},
+	"plugins": [
+		"@typescript-eslint"
+	],
+	"ignorePatterns": ["test/**", "dist/**", "lib/**", "rollup.config.js"],
+	"rules": {
+		"no-console": 0,
+		"no-var": "warn",
+		"indent": [
+			0,
+			"tab"
+		],
+		"linebreak-style": [
+			"error",
+			"windows"
+		],
+		"quotes": [
+			0,
+			"single"
+		],
+		"semi": [
+			0,
+			"always"
+		],
+		"no-useless-escape": "off",
+		"no-extra-boolean-cast": "off",
+		"no-prototype-builtins":"off"
+	}
+}

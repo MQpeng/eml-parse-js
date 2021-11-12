@@ -1,0 +1,8 @@
+.vscode-test/
+out/
+test/fixtures/
+node_modules/
+src/assets/
+*.md
+**/*.svg
+# package.json

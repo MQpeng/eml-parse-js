@@ -1,6 +1,6 @@
 {
   "name": "eml-parse-js",
-  "version": "1.0.4",
+  "version": "1.0.5",
   "description": "format EML file in browser env",
   "main": "./lib/bundle.umd.js",
   "module": "./lib/bundle.esm.js",

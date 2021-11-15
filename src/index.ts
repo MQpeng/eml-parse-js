@@ -46,6 +46,7 @@ interface Attachment {
 	contentType: string;
 	inline: boolean;
 	data: string | Uint8Array;
+	data64: string;
 	filename?: string;
 	mimeType?: string;
 	id?: string;
@@ -504,6 +505,9 @@ function parseRecursive(lines: string[], start: number, parent: any, options: Op
 						complete(boundary);
 						continue;
 					}
+					if (boundary?.boundary && line.indexOf('--' + findBoundary + '--') == 0) {
+						continue;
+					}
 					boundary?.lines.push(line);
 				}
 			} else {
@@ -902,6 +906,7 @@ function read(
 			}
 
 			attachment.data = content as Uint8Array;
+			attachment.data64 = decode(content as Uint8Array, charset);
 			result.attachments.push(attachment);
 		}
 	}

@@ -269,7 +269,7 @@ exports.parseEml = parse;
  * @returns {ParsedEmlJson}
  */
 function parseRecursive(lines, start, parent, options) {
-    var _a, _b;
+    var _a, _b, _c;
     var boundary = null;
     var lastHeaderName = '';
     var findBoundary = '';
@@ -373,7 +373,10 @@ function parseRecursive(lines, start, parent, options) {
                         complete(boundary);
                         continue;
                     }
-                    (_b = boundary) === null || _b === void 0 ? void 0 : _b.lines.push(line);
+                    if (((_b = boundary) === null || _b === void 0 ? void 0 : _b.boundary) && line.indexOf('--' + findBoundary + '--') == 0) {
+                        continue;
+                    }
+                    (_c = boundary) === null || _c === void 0 ? void 0 : _c.lines.push(line);
                 }
             }
             else {
@@ -756,6 +759,7 @@ function read(eml, options, callback) {
                 attachment.inline = /^\s*inline/g.test(cd);
             }
             attachment.data = content;
+            attachment.data64 = charset_1.decode(content, charset);
             result.attachments.push(attachment);
         }
     }

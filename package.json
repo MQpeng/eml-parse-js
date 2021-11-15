@@ -1,6 +1,6 @@
 {
-  "name": "eml-js",
-  "version": "1.0.1",
+  "name": "eml-parse-js",
+  "version": "1.0.4",
   "description": "format EML file in browser env",
   "main": "./lib/bundle.umd.js",
   "module": "./lib/bundle.esm.js",
@@ -31,7 +31,7 @@
   "private": false,
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/MQpeng/eml-js.git"
+    "url": "git+https://github.com/MQpeng/eml-parse-js"
   },
   "keywords": [
     "eml",
@@ -41,9 +41,9 @@
   "author": "superchow",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/MQpeng/eml-js/issues"
+    "url": "https://github.com/MQpeng/eml-parse-js/issues"
   },
-  "homepage": "https://github.com/MQpeng/eml-js#readme",
+  "homepage": "https://github.com/MQpeng/eml-parse-js#readme",
   "devDependencies": {
     "@types/js-base64": "^2.3.1",
     "@types/ramda": "^0.26.36",

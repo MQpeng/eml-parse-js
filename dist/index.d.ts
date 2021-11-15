@@ -40,6 +40,7 @@ interface Attachment {
     contentType: string;
     inline: boolean;
     data: string | Uint8Array;
+    data64: string;
     filename?: string;
     mimeType?: string;
     id?: string;

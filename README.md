@@ -3,3 +3,4 @@
 
 > fork from `eml-format-js`(used in Browser env) & `eml-format` (used in NodeJs env)
 1. fix `eml-format-js` for parsing html from the eml with `quoted-printable`
+2. add `data` with `base64` in attachment

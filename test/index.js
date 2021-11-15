@@ -34,10 +34,10 @@ function _parse(eml, fileName) {
 
 
 describe('parseEml should Ok', () => {
-  it('199532 should Ok', () => {
-    const src = path.join(__dirname, "./fixtures/199532.eml");
+  it('xiajie should Ok', () => {
+    const src = path.join(__dirname, "./fixtures/xiajie.eml");
     const eml = fs.readFileSync(src, "utf-8");
-    _read(eml, '199532');
+    _read(eml, 'xiajie');
   });
   // it('InfoQ should Ok', () => {
   //   const src = path.join(__dirname, "./fixtures/InfoQ.eml");

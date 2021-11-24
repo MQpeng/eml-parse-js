@@ -852,22 +852,28 @@ function read(
 			content = decode(content as Uint8Array, charset);
 		}
 
-		if (!result.html && contentType && contentType.indexOf('text/html') >= 0) {
+		if (contentType && contentType.indexOf('text/html') >= 0) {
 			if (typeof content !== 'string') {
 				content = decode(content as Uint8Array, charset);
 			}
-			//Message in HTML format
-			result.html = content.replace(/\r\n|(&quot;)/g, '').replace(/\"/g, `"`);
+
+			let htmlContent = content.replace(/\r\n|(&quot;)/g, '').replace(/\"/g, `"`);
 
 			try {
 				if (encoding === 'base64') {
-					result.html = Base64.decode(result.html);
+					htmlContent = Base64.decode(htmlContent);
 				}
-				else if (Base64.btoa(Base64.atob(result.html)) == result.html) {
-					result.html = Base64.atob(result.html);
+				else if (Base64.btoa(Base64.atob(htmlContent)) == htmlContent) {
+					htmlContent = Base64.atob(htmlContent);
 				}
 			} catch (error) {
 				console.error(error);
+			}
+
+			if (result.html) {
+				result.html += htmlContent;
+			} else {
+				result.html = htmlContent;
 			}
 
 			result.htmlheaders = {
@@ -875,7 +881,7 @@ function read(
 				'Content-Transfer-Encoding': encoding || '',
 			};
 			// self boundary Not used at conversion
-		} else if (!result.text && contentType && contentType.indexOf('text/plain') >= 0) {
+		} else if (contentType && contentType.indexOf('text/plain') >= 0) {
 			if (typeof content !== 'string') {
 				content = decode(content as Uint8Array, charset);
 			}
@@ -883,7 +889,13 @@ function read(
 				content = Base64.decode(content);
 			}
 			//Plain text message
-			result.text = content;
+
+			if (result.text) {
+				result.text += content;
+			} else {
+				result.text = content;
+			}
+
 			result.textheaders = {
 				'Content-Type': contentType,
 				'Content-Transfer-Encoding': encoding || '',

@@ -50,37 +50,37 @@ describe('ts-hi function test', () => {
   //   // console.log(GBKUTF8.UTF8ToGB2312(GBKUTF8.GB2312ToUTF8(str)));
   //   // expect(GBKUTF8.GB2312ToUTF8(gbkStr)).eq(utf8Str);
   // });
-  it('GBKUTF8 should work', () => {
-    const txt = '%C4E3% %BAC3% ';
-    // const gbkBuff = iconv.encode(txt, 'gbk');
-    // const gbktxt = iconv.decode(gbkBuff, 'gbk');
-    const utf8Txt = GBKUTF8.GB2312ToUTF8(txt);
-    const writeSrc = path.join(__dirname, `./parsed/gbk.txt`);
-    fs.writeFileSync(writeSrc, utf8Txt);
-  });
-  it('getCharset should work', () => {
-    const boundary = "text/plain; charset=utf-8; format=flowed";
-    const res = getCharset(boundary);
-    console.info(res);
-    expect(res).eq("utf-8");
-  });
+  // it('GBKUTF8 should work', () => {
+  //   const txt = '%C4E3% %BAC3% ';
+  //   // const gbkBuff = iconv.encode(txt, 'gbk');
+  //   // const gbktxt = iconv.decode(gbkBuff, 'gbk');
+  //   const utf8Txt = GBKUTF8.GB2312ToUTF8(txt);
+  //   const writeSrc = path.join(__dirname, `./parsed/gbk.txt`);
+  //   fs.writeFileSync(writeSrc, utf8Txt);
+  // });
+  // it('getCharset should work', () => {
+  //   const boundary = "text/plain; charset=utf-8; format=flowed";
+  //   const res = getCharset(boundary);
+  //   console.info(res);
+  //   expect(res).eq("utf-8");
+  // });
 
-  it('getBoundary should work', () => {
-    const boundary = "multipart/alternative;\r\nboundary=\"B_3658292830_1398168712\"";
-    const res = getBoundary(boundary);
-    console.info(res);
-    expect(res).eq("B_3658292830_1398168712");
-  });
+  // it('getBoundary should work', () => {
+  //   const boundary = "multipart/alternative;\r\nboundary=\"B_3658292830_1398168712\"";
+  //   const res = getBoundary(boundary);
+  //   console.info(res);
+  //   expect(res).eq("B_3658292830_1398168712");
+  // });
 
 
-  it('toEmailAddress should work', () => {
-    const emailAddress = { name: 'PayPal', email: 'noreply@paypal.com' };
-    const res = toEmailAddress(emailAddress);
-    expect(res).eq("\"PayPal\" <noreply@paypal.com>");
+  // it('toEmailAddress should work', () => {
+  //   const emailAddress = { name: 'PayPal', email: 'noreply@paypal.com' };
+  //   const res = toEmailAddress(emailAddress);
+  //   expect(res).eq("\"PayPal\" <noreply@paypal.com>");
 
-    const emailAddressS = [{ name: 'PayPal', email: 'noreply@paypal.com' }, { name: 'PayPal', email: 'noreply@paypal.com' }];
-    const resS = toEmailAddress(emailAddressS);
-    expect(resS).eq("\"PayPal\" <noreply@paypal.com>, \"PayPal\" <noreply@paypal.com>");
-  });
+  //   const emailAddressS = [{ name: 'PayPal', email: 'noreply@paypal.com' }, { name: 'PayPal', email: 'noreply@paypal.com' }];
+  //   const resS = toEmailAddress(emailAddressS);
+  //   expect(resS).eq("\"PayPal\" <noreply@paypal.com>, \"PayPal\" <noreply@paypal.com>");
+  // });
 
 });

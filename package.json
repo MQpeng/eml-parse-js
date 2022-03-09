@@ -1,6 +1,6 @@
 {
   "name": "eml-parse-js",
-  "version": "1.0.5",
+  "version": "1.0.7",
   "description": "format EML file in browser env",
   "main": "./lib/bundle.umd.js",
   "module": "./lib/bundle.esm.js",
@@ -38,7 +38,7 @@
     "eml-format-js",
     "typescript"
   ],
-  "author": "superchow",
+  "author": "bean",
   "license": "MIT",
   "bugs": {
     "url": "https://github.com/MQpeng/eml-parse-js/issues"

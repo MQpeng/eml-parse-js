@@ -6,13 +6,13 @@ Object.defineProperty(exports, "__esModule", { value: true });
  */
 var js_base64_1 = require("js-base64");
 exports.Base64 = js_base64_1.Base64;
-var utils_1 = require("./utils");
-exports.mimeDecode = utils_1.mimeDecode;
-exports.GBKUTF8 = utils_1.GB2312UTF8;
 var charset_1 = require("./charset");
-exports.encode = charset_1.encode;
-exports.decode = charset_1.decode;
 exports.convert = charset_1.convert;
+exports.decode = charset_1.decode;
+exports.encode = charset_1.encode;
+var utils_1 = require("./utils");
+exports.GBKUTF8 = utils_1.GB2312UTF8;
+exports.mimeDecode = utils_1.mimeDecode;
 /**
  * log for test
  */
@@ -739,13 +739,12 @@ function read(eml, options, callback) {
             }
             var name_2 = headers['Content-Disposition'] || headers['Content-Type'] || headers['Content-type'];
             if (name_2) {
-                var match = /name="?(.+?)"?$/gi.exec(name_2);
-                if (match) {
-                    name_2 = match[1];
-                }
-                else {
-                    name_2 = null;
-                }
+                name_2 = name_2.replace(/(\s|'|utf-8|\*[0-9]\*)/g, '').split(';').map(function (v) { return /name="?(.+?)"?$/gi.exec(v); }).reduce(function (a, b) {
+                    if (b && b[1]) {
+                        a += b[1];
+                    }
+                    return a;
+                }, "");
             }
             if (name_2) {
                 attachment.name = name_2;

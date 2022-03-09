@@ -2,5 +2,6 @@
     "eslint.alwaysShowStatus": true,
     "editor.tabSize": 2,
     "eslint.lintTask.enable": true,
-    "tslint.jsEnable": true
+    "tslint.jsEnable": true,
+    "nuxt.isNuxtApp": false
 }

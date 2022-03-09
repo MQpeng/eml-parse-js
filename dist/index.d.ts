@@ -105,8 +105,8 @@ interface BoundaryHeaders extends KeyValue {
  * @emil superchow@live.cn
  */
 import { Base64 } from 'js-base64';
-import { mimeDecode, GB2312UTF8 } from './utils';
-import { encode, decode, convert } from './charset';
+import { convert, decode, encode } from './charset';
+import { GB2312UTF8, mimeDecode } from './utils';
 /**
  * create a boundary
  */

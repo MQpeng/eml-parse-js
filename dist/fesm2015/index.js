@@ -1,260 +1,31 @@
-import { Base64 } from 'js-base64';
-export { Base64 } from 'js-base64';
-import { TextEncoder, TextDecoder } from 'text-encoding';
-
-/**
- * Encodes an unicode string into an Uint8Array object as UTF-8
- *
- * @param {String} str String to be encoded
- * @return {Uint8Array} UTF-8 encoded typed array
- */
-var encode = function (str, fromCharset) {
-    if (fromCharset === void 0) { fromCharset = 'utf-8'; }
-    return new TextEncoder(fromCharset).encode(str);
-};
-var arr2str = function (arr) {
-    var CHUNK_SZ = 0x8000;
-    var strs = [];
-    for (var i = 0; i < arr.length; i += CHUNK_SZ) {
-        strs.push(String.fromCharCode.apply(null, arr.subarray(i, i + CHUNK_SZ)));
-    }
-    return strs.join('');
-};
-/**
- * Decodes a string from Uint8Array to an unicode string using specified encoding
- *
- * @param {Uint8Array} buf Binary data to be decoded
- * @param {String} Binary data is decoded into string using this charset
- * @return {String} Decoded string
- */
-function decode(buf, fromCharset) {
-    if (fromCharset === void 0) { fromCharset = 'utf-8'; }
-    var charsets = [
-        { charset: normalizeCharset(fromCharset), fatal: false },
-        { charset: 'utf-8', fatal: true },
-        { charset: 'iso-8859-15', fatal: false },
-    ];
-    for (var _i = 0, charsets_1 = charsets; _i < charsets_1.length; _i++) {
-        var _a = charsets_1[_i], charset = _a.charset, fatal = _a.fatal;
-        try {
-            return new TextDecoder(charset, { fatal: fatal }).decode(buf);
-            // eslint-disable-next-line no-empty
-        }
-        catch (e) { }
-    }
-    return arr2str(buf); // all else fails, treat it as binary
-}
-/**
- * Convert a string from specific encoding to UTF-8 Uint8Array
- *
- * @param {String|Uint8Array} data Data to be encoded
- * @param {String} Source encoding for the string (optional for data of type String)
- * @return {Uint8Array} UTF-8 encoded typed array
- */
-var convert = function (data, fromCharset) {
-    return typeof data === 'string' ? encode(data) : encode(decode(data, fromCharset));
-};
-function normalizeCharset(charset) {
-    if (charset === void 0) { charset = 'utf-8'; }
-    var match;
-    if ((match = charset.match(/^utf[-_]?(\d+)$/i))) {
-        return 'UTF-' + match[1];
-    }
-    if ((match = charset.match(/^win[-_]?(\d+)$/i))) {
-        return 'WINDOWS-' + match[1];
-    }
-    if ((match = charset.match(/^latin[-_]?(\d+)$/i))) {
-        return 'ISO-8859-' + match[1];
-    }
-    return charset;
-}
-
-//Gets the character encoding name for iconv, e.g. 'iso-8859-2' -> 'iso88592'
-function getCharsetName(charset) {
-    return charset.toLowerCase().replace(/[^0-9a-z]/g, '');
-}
-//Generates a random id
-function guid() {
-    return 'xxxxxxxxxxxx-4xxx-yxxx-xxxxxxxxxxxx'
-        .replace(/[xy]/g, function (c) {
-        var r = (Math.random() * 16) | 0, v = c == 'x' ? r : (r & 0x3) | 0x8;
-        return v.toString(16);
-    })
-        .replace('-', '');
-}
-//Word-wrap the string 's' to 'i' chars per row
-function wrap(s, i) {
-    var a = [];
-    do {
-        a.push(s.substring(0, i));
-    } while ((s = s.substring(i, s.length)) != '');
-    return a.join('\r\n');
-}
-/**
- * Decodes mime encoded string to an unicode string
- *
- * @param {String} str Mime encoded string
- * @param {String} [fromCharset='UTF-8'] Source encoding
- * @return {String} Decoded unicode string
- */
-function mimeDecode(str, fromCharset) {
-    if (str === void 0) { str = ''; }
-    if (fromCharset === void 0) { fromCharset = 'UTF-8'; }
-    var encodedBytesCount = (str.match(/=[\da-fA-F]{2}/g) || []).length;
-    var buffer = new Uint8Array(str.length - encodedBytesCount * 2);
-    for (var i = 0, len = str.length, bufferPos = 0; i < len; i++) {
-        var hex = str.substr(i + 1, 2);
-        var chr = str.charAt(i);
-        if (chr === '=' && hex && /[\da-fA-F]{2}/.test(hex)) {
-            buffer[bufferPos++] = parseInt(hex, 16);
-            i += 2;
-        }
-        else {
-            buffer[bufferPos++] = chr.charCodeAt(0);
-        }
-    }
-    return decode(buffer, fromCharset);
-}
-/**
- * converting strings from gbk to utf-8
- */
-var GB2312UTF8 = {
-    Dig2Dec: function (s) {
-        var retV = 0;
-        if (s.length == 4) {
-            for (var i = 0; i < 4; i++) {
-                retV += eval(s.charAt(i)) * Math.pow(2, 3 - i);
-            }
-            return retV;
-        }
-        return -1;
-    },
-    Hex2Utf8: function (s) {
-        var retS = '';
-        var tempS = '';
-        var ss = '';
-        if (s.length == 16) {
-            tempS = '1110' + s.substring(0, 4);
-            tempS += '10' + s.substring(4, 10);
-            tempS += '10' + s.substring(10, 16);
-            var sss = '0123456789ABCDEF';
-            for (var i = 0; i < 3; i++) {
-                retS += '%';
-                ss = tempS.substring(i * 8, (eval(i.toString()) + 1) * 8);
-                retS += sss.charAt(this.Dig2Dec(ss.substring(0, 4)));
-                retS += sss.charAt(this.Dig2Dec(ss.substring(4, 8)));
-            }
-            return retS;
-        }
-        return '';
-    },
-    Dec2Dig: function (n1) {
-        var s = '';
-        var n2 = 0;
-        for (var i = 0; i < 4; i++) {
-            n2 = Math.pow(2, 3 - i);
-            if (n1 >= n2) {
-                s += '1';
-                n1 = n1 - n2;
-            }
-            else {
-                s += '0';
-            }
-        }
-        return s;
-    },
-    Str2Hex: function (s) {
-        var c = '';
-        var n;
-        var ss = '0123456789ABCDEF';
-        var digS = '';
-        for (var i = 0; i < s.length; i++) {
-            c = s.charAt(i);
-            n = ss.indexOf(c);
-            digS += this.Dec2Dig(eval(n.toString()));
-        }
-        return digS;
-    },
-    GB2312ToUTF8: function (s1) {
-        var s = escape(s1);
-        var sa = s.split('%');
-        var retV = '';
-        if (sa[0] != '') {
-            retV = sa[0];
-        }
-        for (var i = 1; i < sa.length; i++) {
-            if (sa[i].substring(0, 1) == 'u') {
-                retV += this.Hex2Utf8(this.Str2Hex(sa[i].substring(1, 5)));
-                if (sa[i].length) {
-                    retV += sa[i].substring(5);
-                }
-            }
-            else {
-                retV += unescape('%' + sa[i]);
-                if (sa[i].length) {
-                    retV += sa[i].substring(5);
-                }
-            }
-        }
-        return retV;
-    },
-    UTF8ToGB2312: function (str1) {
-        var substr = '';
-        var a = '';
-        var b = '';
-        var c = '';
-        var i = -1;
-        i = str1.indexOf('%');
-        if (i == -1) {
-            return str1;
-        }
-        while (i != -1) {
-            if (i < 3) {
-                substr = substr + str1.substr(0, i - 1);
-                str1 = str1.substr(i + 1, str1.length - i);
-                a = str1.substr(0, 2);
-                str1 = str1.substr(2, str1.length - 2);
-                if ((parseInt('0x' + a) & 0x80) === 0) {
-                    substr = substr + String.fromCharCode(parseInt('0x' + a));
-                }
-                else if ((parseInt('0x' + a) & 0xe0) === 0xc0) {
-                    //two byte
-                    b = str1.substr(1, 2);
-                    str1 = str1.substr(3, str1.length - 3);
-                    var widechar = (parseInt('0x' + a) & 0x1f) << 6;
-                    widechar = widechar | (parseInt('0x' + b) & 0x3f);
-                    substr = substr + String.fromCharCode(widechar);
-                }
-                else {
-                    b = str1.substr(1, 2);
-                    str1 = str1.substr(3, str1.length - 3);
-                    c = str1.substr(1, 2);
-                    str1 = str1.substr(3, str1.length - 3);
-                    var widechar = (parseInt('0x' + a) & 0x0f) << 12;
-                    widechar = widechar | ((parseInt('0x' + b) & 0x3f) << 6);
-                    widechar = widechar | (parseInt('0x' + c) & 0x3f);
-                    substr = substr + String.fromCharCode(widechar);
-                }
-            }
-            else {
-                substr = substr + str1.substring(0, i);
-                str1 = str1.substring(i);
-            }
-            i = str1.indexOf('%');
-        }
-        return substr + str1;
-    },
-};
-
 /**
  * @author superchow
  * @emil superchow@live.cn
  */
+import { Base64, } from 'js-base64';
+import { convert, decode, encode, } from './charset';
+import { GB2312UTF8, getCharsetName, guid, mimeDecode, wrap, } from './utils';
 /**
  * log for test
  */
 var verbose = false;
 var defaultCharset = 'utf-8';
+var fileExtensions = {
+    'text/plain': '.txt',
+    'text/html': '.html',
+    'image/png': '.png',
+    'image/jpg': '.jpg',
+    'image/jpeg': '.jpg',
+};
+/**
+ * Gets file extension by mime type
+ * @param {String} mimeType
+ * @returns {String}
+ */
+// eslint-disable-next-line no-unused-vars
+function getFileExtension(mimeType) {
+    return fileExtensions[mimeType] || '';
+}
 /**
  * create a boundary
  */
@@ -267,7 +38,9 @@ function createBoundary() {
  */
 function toEmailAddress(data) {
     var email = '';
-    if (typeof data === 'undefined') ;
+    if (typeof data === 'undefined') {
+        //No e-mail address
+    }
     else if (typeof data === 'string') {
         email = data;
     }
@@ -347,9 +120,9 @@ function getEmailAddress(raw) {
         var regex = /^(.*?)(\s*\<(.*?)\>)$/g;
         var match = regex.exec(partsStr);
         if (match) {
-            var name = match[1].replace(/'/g, '').trim();
-            if (name && name.length) {
-                address.name = name;
+            var name_1 = match[1].replace(/'/g, '').trim();
+            if (name_1 && name_1.length) {
+                address.name = name_1;
             }
             address.email = match[3].trim();
             list.push(address);
@@ -516,6 +289,11 @@ function parseRecursive(lines, start, parent, options) {
                         isMultipart = true;
                         parent.body = [];
                     }
+                    else {
+                        if (verbose) {
+                            console.warn('Multipart without boundary! ' + ct.replace(/\r?\n/g, ' '));
+                        }
+                    }
                 }
                 continue;
             }
@@ -567,6 +345,9 @@ function parseRecursive(lines, start, parent, options) {
                     var match = /^\-\-([^\r\n]+)(\r?\n)?$/g.exec(line);
                     boundary = { boundary: match[1], lines: [] };
                     parent.body.push(boundary);
+                    if (verbose) {
+                        console.log('Found boundary: ' + boundary.boundary);
+                    }
                     continue;
                 }
                 if (insideBoundary) {
@@ -639,6 +420,11 @@ function completeBoundary(boundary) {
             // part.body
             var match = /^\-\-([^\r\n]+)(\r?\n)?$/g.exec(line);
             var childBoundaryStr = getBoundary(result.part.headers['Content-Type'] || result.part.headers['Content-type']);
+            if (verbose) {
+                if (match) {
+                    console.log("line 568: line is " + line + ", " + ('--' + childBoundaryStr), "" + line.indexOf('--' + childBoundaryStr));
+                }
+            }
             if (match && line.indexOf('--' + childBoundaryStr) === 0 && !childBoundary) {
                 childBoundary = { boundary: match ? match[1] : '', lines: [] };
                 continue;
@@ -646,6 +432,9 @@ function completeBoundary(boundary) {
             else if (!!childBoundary && childBoundary.boundary) {
                 if (lines[index - 1] === '' && line.indexOf('--' + childBoundary.boundary) === 0) {
                     var child = completeBoundary(childBoundary);
+                    if (verbose) {
+                        console.info("578: " + JSON.stringify(child));
+                    }
                     if (child) {
                         if (Array.isArray(result.part.body)) {
                             result.part.body.push(child);
@@ -664,6 +453,9 @@ function completeBoundary(boundary) {
                     }
                     // end line child And this boundary's end
                     if (line.indexOf('--' + childBoundary.boundary + '--') === 0 && lines[index + 1] === '') {
+                        if (verbose) {
+                            console.info('line 601 childBoundary is over line is 534');
+                        }
                         childBoundary = undefined;
                         break;
                     }
@@ -671,6 +463,9 @@ function completeBoundary(boundary) {
                 childBoundary.lines.push(line);
             }
             else {
+                if (verbose) {
+                    console.warn('body is string');
+                }
                 result.part.body = lines.splice(index).join('\r\n');
                 break;
             }
@@ -813,7 +608,6 @@ function build(data, options, callback) {
         if (data.attachments) {
             for (var i = 0; i < data.attachments.length; i++) {
                 var attachment = data.attachments[i];
-                console.log("🚀 ~ file: index.ts ~ line 771 ~ parseRecursive ~ attachment", attachment);
                 eml += '--' + boundary + EOL;
                 eml += 'Content-Type: ' + (attachment.contentType.replace(/\r?\n/g, EOL + '  ') || 'application/octet-stream') + EOL;
                 eml += 'Content-Transfer-Encoding: base64' + EOL;
@@ -925,18 +719,17 @@ function read(eml, options, callback) {
             if (id) {
                 attachment.id = id;
             }
-            var name = headers['Content-Disposition'] || headers['Content-Type'] || headers['Content-type'];
-            if (name) {
-                var match = /name="?(.+?)"?$/gi.exec(name);
-                if (match) {
-                    name = match[1];
-                }
-                else {
-                    name = null;
-                }
+            var name_2 = headers['Content-Disposition'] || headers['Content-Type'] || headers['Content-type'];
+            if (name_2) {
+                name_2 = name_2.replace(/(\s|'|utf-8|\*[0-9]\*)/g, '').split(';').map(function (v) { return /name="?(.+?)"?$/gi.exec(v); }).reduce(function (a, b) {
+                    if (b) {
+                        a += b;
+                    }
+                    return a;
+                }, "");
             }
-            if (name) {
-                attachment.name = name;
+            if (name_2) {
+                attachment.name = name_2;
             }
             var ct = headers['Content-Type'] || headers['Content-type'];
             if (ct) {
@@ -1081,9 +874,12 @@ function read(eml, options, callback) {
     callback && callback(error, result);
     return error || result || new Error('read EML failed!');
 }
+/**
+ * if you need
+ * eml-format all api
+ */
+export { getEmailAddress, toEmailAddress, createBoundary, getBoundary, getCharset, unquoteString, unquotePrintable, mimeDecode, Base64, convert, encode, decode, completeBoundary, parse as parseEml, read as readEml, build as buildEml, GB2312UTF8 as GBKUTF8, };
 //  const GBKUTF8 = GB2312UTF8;
 //  const parseEml = parse;
 //  const readEml = read;
 //  const buildEml = build;
-
-export { GB2312UTF8 as GBKUTF8, build as buildEml, completeBoundary, convert, createBoundary, decode, encode, getBoundary, getCharset, getEmailAddress, mimeDecode, parse as parseEml, read as readEml, toEmailAddress, unquotePrintable, unquoteString };

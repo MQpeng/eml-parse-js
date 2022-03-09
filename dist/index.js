@@ -739,15 +739,19 @@ function read(eml, options, callback) {
             }
             var name_2 = headers['Content-Disposition'] || headers['Content-Type'] || headers['Content-type'];
             if (name_2) {
-                name_2 = name_2.replace(/(\s|'|utf-8|\*[0-9]\*)/g, '').split(';').map(function (v) { return /name="?(.+?)"?$/gi.exec(v); }).reduce(function (a, b) {
+                name_2 = name_2
+                    .replace(/(\s|'|utf-8|\*[0-9]\*)/g, '')
+                    .split(';')
+                    .map(function (v) { return /name="?(.+?)"?$/gi.exec(v); })
+                    .reduce(function (a, b) {
                     if (b && b[1]) {
                         a += b[1];
                     }
                     return a;
-                }, "");
+                }, '');
             }
             if (name_2) {
-                attachment.name = name_2;
+                attachment.name = decodeURI(name_2);
             }
             var ct = headers['Content-Type'] || headers['Content-type'];
             if (ct) {

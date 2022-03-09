@@ -121,10 +121,10 @@ interface BoundaryHeaders extends KeyValue {
  * @emil superchow@live.cn
  */
 
-import { Base64, } from 'js-base64';
+import { Base64 } from 'js-base64';
 
-import { convert, decode, encode, } from './charset';
-import { GB2312UTF8, getCharsetName, guid, mimeDecode, wrap, } from './utils';
+import { convert, decode, encode } from './charset';
+import { GB2312UTF8, getCharsetName, guid, mimeDecode, wrap } from './utils';
 
 /**
  * log for test
@@ -885,15 +885,19 @@ function read(
 
 			let name = headers['Content-Disposition'] || headers['Content-Type'] || headers['Content-type'];
 			if (name) {
-				name = name.replace(/(\s|'|utf-8|\*[0-9]\*)/g,'').split(';').map(v=>/name="?(.+?)"?$/gi.exec(v)).reduce((a,b)=>{
-					if(b && b[1]){
-						a += b[1];
-					}
-					return a;
-				},"")
+				name = name
+					.replace(/(\s|'|utf-8|\*[0-9]\*)/g, '')
+					.split(';')
+					.map(v => /name="?(.+?)"?$/gi.exec(v))
+					.reduce((a, b) => {
+						if (b && b[1]) {
+							a += b[1];
+						}
+						return a;
+					}, '');
 			}
 			if (name) {
-				attachment.name = name;
+				attachment.name = decodeURI(name);
 			}
 
 			const ct = headers['Content-Type'] || headers['Content-type'];

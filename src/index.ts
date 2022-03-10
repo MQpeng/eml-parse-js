@@ -859,7 +859,7 @@ function read(
 
 			let atob1 = typeof atob === 'undefined' ? null : atob;
 			let btoa1 = typeof btoa === 'undefined' ? null : btoa;
-			if (Buffer) {
+			if (typeof Buffer != 'undefined') {
 				atob1 = (str: any) => Buffer.from(str, 'base64').toString('utf-8');
 				btoa1 = (str: any) => Buffer.from(str).toString('base64');
 			}

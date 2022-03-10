@@ -733,7 +733,7 @@ function read(eml, options, callback) {
                 result.attachments = [];
             }
             var attachment = {};
-            var id = headers['Content-ID'];
+            var id = headers['Content-ID'] || headers['Content-Id'];
             if (id) {
                 attachment.id = id;
             }

@@ -121,10 +121,10 @@ interface BoundaryHeaders extends KeyValue {
  * @emil superchow@live.cn
  */
 
-import { Base64 } from 'js-base64';
+import { Base64, } from 'js-base64';
 
-import { convert, decode, encode } from './charset';
-import { GB2312UTF8, getCharsetName, guid, mimeDecode, wrap } from './utils';
+import { convert, decode, encode, } from './charset';
+import { GB2312UTF8, getCharsetName, guid, mimeDecode, wrap, } from './utils';
 
 /**
  * log for test
@@ -878,7 +878,7 @@ function read(
 
 			const attachment = {} as Attachment;
 
-			const id = headers['Content-ID'];
+			const id = headers['Content-ID'] || headers['Content-Id'];
 			if (id) {
 				attachment.id = id;
 			}

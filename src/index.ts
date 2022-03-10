@@ -1,3 +1,5 @@
+declare const Buffer: any;
+
 interface KeyValue extends Object {
 	[k: string]: any;
 }
@@ -121,10 +123,10 @@ interface BoundaryHeaders extends KeyValue {
  * @emil superchow@live.cn
  */
 
-import { Base64, } from 'js-base64';
+import { Base64 } from 'js-base64';
 
-import { convert, decode, encode, } from './charset';
-import { GB2312UTF8, getCharsetName, guid, mimeDecode, wrap, } from './utils';
+import { convert, decode, encode } from './charset';
+import { GB2312UTF8, getCharsetName, guid, mimeDecode, wrap } from './utils';
 
 /**
  * log for test
@@ -854,6 +856,18 @@ function read(
 			}
 			//Message in HTML format
 			result.html = content.replace(/\r\n|(&quot;)/g, '').replace(/\"/g, `"`);
+
+			let atob1 = typeof atob === 'undefined' ? null : atob;
+			let btoa1 = typeof btoa === 'undefined' ? null : btoa;
+			if (Buffer) {
+				atob1 = (str: any) => Buffer.from(str, 'base64').toString('utf-8');
+				btoa1 = (str: any) => Buffer.from(str).toString('base64');
+			}
+
+			if (atob1 && btoa1 && atob1(btoa1(result.html)) == result.html) {
+				result.html = atob1(result.html);
+			}
+
 			result.htmlheaders = {
 				'Content-Type': contentType,
 				'Content-Transfer-Encoding': encoding || '',

@@ -68,5 +68,9 @@ function normalizeCharset(charset = 'utf-8') {
 		return 'ISO-8859-' + match[1];
 	}
 
+	if ((match = charset.match(/^GB[-_]?(\d+)$/i))) {
+		return 'hz-gb-' + match[1];
+	}
+
 	return charset;
 }

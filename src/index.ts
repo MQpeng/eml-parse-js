@@ -864,7 +864,7 @@ function read(
 				btoa1 = (str: any) => Buffer.from(str).toString('base64');
 			}
 
-			if (atob1 && btoa1 && atob1(btoa1(result.html)) == result.html) {
+			if (atob1 && btoa1 && btoa1(atob1(result.html)) == result.html) {
 				result.html = atob1(result.html);
 			}
 
@@ -897,21 +897,29 @@ function read(
 				attachment.id = id;
 			}
 
-			let name = headers['Content-Disposition'] || headers['Content-Type'] || headers['Content-type'];
-			if (name) {
-				name = name
-					.replace(/(\s|'|utf-8|\*[0-9]\*)/g, '')
-					.split(';')
-					.map(v => /name="?(.+?)"?$/gi.exec(v))
-					.reduce((a, b) => {
-						if (b && b[1]) {
-							a += b[1];
-						}
-						return a;
-					}, '');
+			const NameContainer = ['Content-Disposition', 'Content-Type', 'Content-type'];
+
+			let result_name;
+			for (const key of NameContainer) {
+				const name: string = headers[key];
+				if (name) {
+					result_name = name
+						.replace(/(\s|'|utf-8|\*[0-9]\*)/g, '')
+						.split(';')
+						.map(v => /name="?(.+?)"?$/gi.exec(v))
+						.reduce((a, b) => {
+							if (b && b[1]) {
+								a += b[1];
+							}
+							return a;
+						}, '');
+					if (result_name) {
+						break;
+					}
+				}
 			}
-			if (name) {
-				attachment.name = decodeURI(name);
+			if (result_name) {
+				attachment.name = decodeURI(result_name);
 			}
 
 			const ct = headers['Content-Type'] || headers['Content-type'];

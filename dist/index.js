@@ -715,7 +715,7 @@ function read(eml, options, callback) {
                 atob1 = function (str) { return Buffer.from(str, 'base64').toString('utf-8'); };
                 btoa1 = function (str) { return Buffer.from(str).toString('base64'); };
             }
-            if (atob1 && btoa1 && atob1(btoa1(result.html)) == result.html) {
+            if (atob1 && btoa1 && btoa1(atob1(result.html)) == result.html) {
                 result.html = atob1(result.html);
             }
             result.htmlheaders = {
@@ -746,21 +746,29 @@ function read(eml, options, callback) {
             if (id) {
                 attachment.id = id;
             }
-            var name_2 = headers['Content-Disposition'] || headers['Content-Type'] || headers['Content-type'];
-            if (name_2) {
-                name_2 = name_2
-                    .replace(/(\s|'|utf-8|\*[0-9]\*)/g, '')
-                    .split(';')
-                    .map(function (v) { return /name="?(.+?)"?$/gi.exec(v); })
-                    .reduce(function (a, b) {
-                    if (b && b[1]) {
-                        a += b[1];
+            var NameContainer = ['Content-Disposition', 'Content-Type', 'Content-type'];
+            var result_name = void 0;
+            for (var _i = 0, NameContainer_1 = NameContainer; _i < NameContainer_1.length; _i++) {
+                var key = NameContainer_1[_i];
+                var name_2 = headers[key];
+                if (name_2) {
+                    result_name = name_2
+                        .replace(/(\s|'|utf-8|\*[0-9]\*)/g, '')
+                        .split(';')
+                        .map(function (v) { return /name="?(.+?)"?$/gi.exec(v); })
+                        .reduce(function (a, b) {
+                        if (b && b[1]) {
+                            a += b[1];
+                        }
+                        return a;
+                    }, '');
+                    if (result_name) {
+                        break;
                     }
-                    return a;
-                }, '');
+                }
             }
-            if (name_2) {
-                attachment.name = decodeURI(name_2);
+            if (result_name) {
+                attachment.name = decodeURI(result_name);
             }
             var ct = headers['Content-Type'] || headers['Content-type'];
             if (ct) {

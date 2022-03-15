@@ -66,8 +66,5 @@ function normalizeCharset(charset) {
     if ((match = charset.match(/^latin[-_]?(\d+)$/i))) {
         return 'ISO-8859-' + match[1];
     }
-    if ((match = charset.match(/^GB[-_]?(\d+)$/i))) {
-        return 'hz-gb-' + match[1];
-    }
     return charset;
 }

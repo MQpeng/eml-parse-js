@@ -287,7 +287,7 @@ function decodeJoint(str: string) {
 			if (charset === 'utf8') {
 				return decode(encode(Base64.fromBase64(value.replace(/\r?\n/g, ''))), 'utf8');
 			} else {
-				return decode(encode(Base64.fromBase64(value.replace(/\r?\n/g, ''))), charset);
+				return decode(Base64.toUint8Array(value.replace(/\r?\n/g, '')), charset);
 			}
 		} else if (type === 'Q') {
 			//Quoted printable

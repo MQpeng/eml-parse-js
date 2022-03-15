@@ -172,7 +172,7 @@ function decodeJoint(str) {
                 return charset_1.decode(charset_1.encode(js_base64_1.Base64.fromBase64(value.replace(/\r?\n/g, ''))), 'utf8');
             }
             else {
-                return charset_1.decode(charset_1.encode(js_base64_1.Base64.fromBase64(value.replace(/\r?\n/g, ''))), charset);
+                return charset_1.decode(js_base64_1.Base64.toUint8Array(value.replace(/\r?\n/g, '')), charset);
             }
         }
         else if (type === 'Q') {

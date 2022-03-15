@@ -19,7 +19,7 @@ export default {
 		{
 			file: 'lib/bundle.umd.js',
 			format: 'umd',
-			name: 'EmlFormatJs',
+			name: 'EmlParseJs',
 			globals: {
 				'js-base64': 'Base64',
 				'text-encoding': 'self'

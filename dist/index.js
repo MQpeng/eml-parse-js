@@ -709,14 +709,13 @@ function read(eml, options, callback) {
             }
             //Message in HTML format
             result.html = content.replace(/\r\n|(&quot;)/g, '').replace(/\"/g, "\"");
-            var atob1 = typeof atob === 'undefined' ? null : atob;
-            var btoa1 = typeof btoa === 'undefined' ? null : btoa;
-            if (typeof Buffer != 'undefined') {
-                atob1 = function (str) { return Buffer.from(str, 'base64').toString('utf-8'); };
-                btoa1 = function (str) { return Buffer.from(str).toString('base64'); };
+            try {
+                if (js_base64_1.Base64.btoa(js_base64_1.Base64.atob(result.html)) == result.html) {
+                    result.html = js_base64_1.Base64.atob(result.html);
+                }
             }
-            if (atob1 && btoa1 && btoa1(atob1(result.html)) == result.html) {
-                result.html = atob1(result.html);
+            catch (error) {
+                console.error(error);
             }
             result.htmlheaders = {
                 'Content-Type': contentType,

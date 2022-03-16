@@ -1,5 +1,3 @@
-declare const Buffer: any;
-
 interface KeyValue extends Object {
 	[k: string]: any;
 }
@@ -857,15 +855,12 @@ function read(
 			//Message in HTML format
 			result.html = content.replace(/\r\n|(&quot;)/g, '').replace(/\"/g, `"`);
 
-			let atob1 = typeof atob === 'undefined' ? null : atob;
-			let btoa1 = typeof btoa === 'undefined' ? null : btoa;
-			if (typeof Buffer != 'undefined') {
-				atob1 = (str: any) => Buffer.from(str, 'base64').toString('utf-8');
-				btoa1 = (str: any) => Buffer.from(str).toString('base64');
-			}
-
-			if (atob1 && btoa1 && btoa1(atob1(result.html)) == result.html) {
-				result.html = atob1(result.html);
+			try {
+				if (Base64.btoa(Base64.atob(result.html)) == result.html) {
+					result.html = Base64.atob(result.html);
+				}
+			} catch (error) {
+				console.error(error);
 			}
 
 			result.htmlheaders = {

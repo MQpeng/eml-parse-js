@@ -901,7 +901,7 @@ function read(
 					result_name = name
 						.replace(/(\s|'|utf-8|\*[0-9]\*)/g, '')
 						.split(';')
-						.map(v => /name="?(.+?)"?$/gi.exec(v))
+						.map(v => /name[\*]?="?(.+?)"?$/gi.exec(v))
 						.reduce((a, b) => {
 							if (b && b[1]) {
 								a += b[1];

@@ -754,7 +754,7 @@ function read(eml, options, callback) {
                     result_name = name_2
                         .replace(/(\s|'|utf-8|\*[0-9]\*)/g, '')
                         .split(';')
-                        .map(function (v) { return /name="?(.+?)"?$/gi.exec(v); })
+                        .map(function (v) { return /name[\*]?="?(.+?)"?$/gi.exec(v); })
                         .reduce(function (a, b) {
                         if (b && b[1]) {
                             a += b[1];

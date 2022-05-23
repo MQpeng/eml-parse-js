@@ -104,12 +104,12 @@ export interface BoundaryRawData {
  * Convert BoundaryRawData result
  */
 export interface BoundaryConvertedData {
-		boundary: string;
-		part: {
-			headers: BoundaryHeaders;
-			body: string | Array<BoundaryConvertedData | string>;
-		};
- }
+	boundary: string;
+	part: {
+		headers: BoundaryHeaders;
+		body: string | Array<BoundaryConvertedData | string>;
+	};
+}
 export interface BoundaryHeaders extends KeyValue {
 	'Content-Type': string;
 	'Content-Transfer-Encoding'?: string;

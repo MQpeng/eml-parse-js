@@ -1,8 +1,8 @@
-interface KeyValue extends Object {
+export interface KeyValue extends Object {
 	[k: string]: any;
 }
 
-interface EmailAddress {
+export interface EmailAddress {
 	name: string;
 	email: string;
 }
@@ -10,7 +10,7 @@ interface EmailAddress {
 /**
  * parse result
  */
-interface ParsedEmlJson {
+export interface ParsedEmlJson {
 	headers: EmlHeaders;
 	body?: string | (BoundaryConvertedData | null)[];
 }
@@ -18,7 +18,7 @@ interface ParsedEmlJson {
 /**
  * read result
  */
-interface ReadedEmlJson {
+export interface ReadedEmlJson {
 	date: Date | string;
 	subject: string;
 	from: EmailAddress | EmailAddress[] | null;
@@ -41,7 +41,7 @@ interface ReadedEmlJson {
 /**
  * Attachment file
  */
-interface Attachment {
+export interface Attachment {
 	name: string;
 	contentType: string;
 	inline: boolean;
@@ -57,7 +57,7 @@ interface Attachment {
  * EML headers
  * @description `MIME-Version`, `Accept-Language`, `Content-Language` and `Content-Type` shuld Must exist when to build a EML file
  */
-interface EmlHeaders extends KeyValue {
+export interface EmlHeaders extends KeyValue {
 	Date?: string;
 	Subject?: string;
 	From?: string;
@@ -79,38 +79,38 @@ interface EmlHeaders extends KeyValue {
 	'Content-transfer-encoding'?: string;
 }
 
-interface Options {
+export interface Options {
 	headersOnly: boolean;
 }
 /**
  * encode is not realized yet
  */
-interface BuildOptions extends Options {
+export interface BuildOptions extends Options {
 	encode?: boolean; // Not realized yet
 }
 
-type CallbackFn<T> = (error: any, result?: T) => void;
+export type CallbackFn<T> = (error: any, result?: T) => void;
 
-type OptionOrNull = Options | null;
+export type OptionOrNull = Options | null;
 
 /**
  * BoundaryRawData
  */
-interface BoundaryRawData {
+export interface BoundaryRawData {
 	boundary: string;
 	lines: string[];
 }
 /**
  * Convert BoundaryRawData result
  */
-interface BoundaryConvertedData {
-	boundary: string;
-	part: {
-		headers: BoundaryHeaders;
-		body: string | Array<BoundaryConvertedData | string>;
-	};
-}
-interface BoundaryHeaders extends KeyValue {
+export interface BoundaryConvertedData {
+		boundary: string;
+		part: {
+			headers: BoundaryHeaders;
+			body: string | Array<BoundaryConvertedData | string>;
+		};
+ }
+export interface BoundaryHeaders extends KeyValue {
 	'Content-Type': string;
 	'Content-Transfer-Encoding'?: string;
 	'Content-Disposition'?: string;

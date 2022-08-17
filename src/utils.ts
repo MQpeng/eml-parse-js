@@ -49,6 +49,8 @@ export function mimeDecode(str = '', fromCharset = 'UTF-8') {
 		if (chr === '=' && hex && /[\da-fA-F]{2}/.test(hex)) {
 			buffer[bufferPos++] = parseInt(hex, 16);
 			i += 2;
+		} else if (chr === '_') {
+			buffer[bufferPos++] = 20; // space character
 		} else {
 			buffer[bufferPos++] = chr.charCodeAt(0);
 		}

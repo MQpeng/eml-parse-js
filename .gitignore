@@ -13,8 +13,6 @@
 chrome-profiler-events.json
 speed-measure-plugin.json
 
-/test/fixtures/*eml
-
 # IDEs and editors
 /.idea
 .project

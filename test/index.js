@@ -74,3 +74,15 @@ describe('parseEml should Ok', () => {
   //   });
   // });
 });
+
+describe('readEml', () => {
+  it('should decode subjects with spaces correctly', () => {
+    const src = path.join(__dirname, "./fixtures/smallEmail.eml");
+    const eml = fs.readFileSync(src, "utf-8");
+    readEml(eml, (_response, obj) => {
+      expect(obj.subject).to.equal('A subject with spaces')
+    });
+  })
+
+  
+})

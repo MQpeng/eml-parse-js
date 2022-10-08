@@ -34,11 +34,11 @@ function _parse(eml, fileName) {
 
 
 describe('parseEml should Ok', () => {
-  it('123 should Ok', () => {
-    const src = path.join(__dirname, "./fixtures/123.eml");
-    const eml = fs.readFileSync(src, "utf-8");
-    _read(eml, '123');
-  }).timeout(10000);;
+  // it('123 should Ok', () => {
+  //   const src = path.join(__dirname, "./fixtures/123.eml");
+  //   const eml = fs.readFileSync(src, "utf-8");
+  //   _read(eml, '123');
+  // }).timeout(10000);
   // it('InfoQ should Ok', () => {
   //   const src = path.join(__dirname, "./fixtures/InfoQ.eml");
   //   const eml = fs.readFileSync(src, "utf-8");

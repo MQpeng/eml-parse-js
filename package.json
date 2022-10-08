@@ -1,6 +1,6 @@
 {
   "name": "eml-parse-js",
-  "version": "1.0.21",
+  "version": "1.1.0",
   "description": "format EML file in browser env",
   "main": "./lib/bundle.umd.js",
   "module": "./lib/bundle.esm.js",
@@ -21,7 +21,8 @@
     "link:lib": "rimraf node_modules/eml-format-js && linklocal",
     "prettier": "prettier --parser typescript --write src/*ts && npm run lint",
     "prepublishOnly": "npm run prettier && npm run build:publish && npm run test",
-    "test": "mocha --reporter spec"
+    "test": "mocha --reporter spec",
+    "ci": "npm install"
   },
   "files": [
     "src",

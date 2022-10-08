@@ -21,7 +21,8 @@
     "link:lib": "rimraf node_modules/eml-format-js && linklocal",
     "prettier": "prettier --parser typescript --write src/*ts && npm run lint",
     "prepublishOnly": "npm run prettier && npm run build:publish && npm run test",
-    "test": "mocha --reporter spec"
+    "test": "mocha --reporter spec",
+    "ci": "npm install"
   },
   "files": [
     "src",

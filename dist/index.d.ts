@@ -146,7 +146,7 @@ declare function unquoteString(str: string): string;
  * @param {String} charset
  * @returns {String}
  */
-declare function unquotePrintable(value: string, charset?: string): string;
+declare function unquotePrintable(value: string, charset?: string, qEncoding?: boolean): string;
 /**
  * Parses EML file content and returns object-oriented representation of the content.
  * @param {String} eml

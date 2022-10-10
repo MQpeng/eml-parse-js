@@ -177,7 +177,7 @@ function decodeJoint(str) {
         }
         else if (type === 'Q') {
             //Quoted printable
-            return unquotePrintable(value, charset);
+            return unquotePrintable(value, charset, true);
         }
     }
     return str;
@@ -205,11 +205,12 @@ exports.unquoteString = unquoteString;
  * @param {String} charset
  * @returns {String}
  */
-function unquotePrintable(value, charset) {
+function unquotePrintable(value, charset, qEncoding) {
     //Convert =0D to '\r', =20 to ' ', etc.
     // if (!charset || charset == "utf8" || charset == "utf-8") {
     //   return value
     //     .replace(/=([\w\d]{2})=([\w\d]{2})=([\w\d]{2})/gi, function (matcher, p1, p2, p3, offset, string) {
+    if (qEncoding === void 0) { qEncoding = false; }
     //     })
     //     .replace(/=([\w\d]{2})=([\w\d]{2})/gi, function (matcher, p1, p2, offset, string) {
     //     })
@@ -226,6 +227,9 @@ function unquotePrintable(value, charset) {
     var rawString = value
         .replace(/[\t ]+$/gm, '') // remove invalid whitespace from the end of lines
         .replace(/=(?:\r?\n|$)/g, ''); // remove soft line breaks
+    if (qEncoding) {
+        rawString = rawString.replace(/_/g, charset_1.decode(new Uint8Array([0x20]), charset));
+    }
     return utils_1.mimeDecode(rawString, charset);
 }
 exports.unquotePrintable = unquotePrintable;

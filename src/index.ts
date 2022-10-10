@@ -289,7 +289,7 @@ function decodeJoint(str: string) {
 			}
 		} else if (type === 'Q') {
 			//Quoted printable
-			return unquotePrintable(value, charset);
+			return unquotePrintable(value, charset, true);
 		}
 	}
 	return str;
@@ -318,7 +318,7 @@ function unquoteString(str: string): string {
  * @param {String} charset
  * @returns {String}
  */
-function unquotePrintable(value: string, charset?: string): string {
+function unquotePrintable(value: string, charset?: string, qEncoding = false): string {
 	//Convert =0D to '\r', =20 to ' ', etc.
 	// if (!charset || charset == "utf8" || charset == "utf-8") {
 	//   return value
@@ -340,9 +340,13 @@ function unquotePrintable(value: string, charset?: string): string {
 	//      })
 	//     .replace(/=\r?\n/gi, ''); //Join line
 	// }
-	const rawString = value
+	let rawString = value
 		.replace(/[\t ]+$/gm, '') // remove invalid whitespace from the end of lines
 		.replace(/=(?:\r?\n|$)/g, ''); // remove soft line breaks
+
+	if (qEncoding) {
+		rawString = rawString.replace(/_/g, decode(new Uint8Array([0x20]), charset));
+	}
 
 	return mimeDecode(rawString, charset);
 }

@@ -29,10 +29,6 @@
 			0,
 			"tab"
 		],
-		"linebreak-style": [
-			"error",
-			"windows"
-		],
 		"quotes": [
 			0,
 			"single"

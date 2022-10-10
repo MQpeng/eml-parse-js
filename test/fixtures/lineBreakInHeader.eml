@@ -1,0 +1,20 @@
+MIME-Version: 1.0
+Date: Thu, 29 Sep 2022 12:22:20 +0100
+Message-ID:
+  <CAGFso0R6WbMomMx6mFFJzt_wiL8wRm3sN0YQwXz12Ugbt72XSw@mail.gmail.com>
+Subject: A subject with spaces
+From: =?UTF-8?Q?Nobody_there?= <dummyEmail@emailClient.com>
+To: =?UTF-8?Q?Nobody_here?= <dummyEmail2@emailClient.com>
+Content-Type: multipart/alternative; boundary="0000000000003a852505e9cf17b2"
+
+--0000000000003a852505e9cf17b2
+Content-Type: text/plain; charset="UTF-8"
+
+A small body
+
+--0000000000003a852505e9cf17b2
+Content-Type: text/html; charset="UTF-8"
+
+<div dir="ltr">A small body</div>
+
+--0000000000003a852505e9cf17b2--

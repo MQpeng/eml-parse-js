@@ -1,7 +1,7 @@
 'use strict';
 const fs = require("fs");
 const path = require("path");
-const expect = require('chai').expect;
+const { expect, assert } = require('chai');
 
 const {
   readEml,
@@ -84,5 +84,13 @@ describe('readEml', () => {
     });
   })
 
-  
+	it('should decode headers with line breaks correctly', () => {
+		const src = path.join(__dirname, './fixtures/lineBreakInHeader.eml');
+		const eml = fs.readFileSync(src, 'utf-8');
+		readEml(eml, (_response, obj) => {
+			expect(obj.headers.Date).to.equal('Thu, 29 Sep 2022 12:22:20 +0100');
+			expect(obj.headers['Message-ID']).to.equal('\r\n<CAGFso0R6WbMomMx6mFFJzt_wiL8wRm3sN0YQwXz12Ugbt72XSw@mail.gmail.com>');
+			assert.deepEqual(obj.date, new Date('Thu, 29 Sep 2022 12:22:20 +0100'));
+		});
+	});
 })

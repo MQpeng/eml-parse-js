@@ -458,7 +458,7 @@ function parseRecursive(lines: string[], start: number, parent: any, options: Op
 			}
 
 			//Header name and value
-			match = /^([\w\d\-]+):\s+([^\r\n]+)/gi.exec(line);
+			match = /^([\w\d\-]+):\s*([^\r\n]*)/gi.exec(line);
 			if (match) {
 				lastHeaderName = match[1];
 				if (parent.headers[lastHeaderName]) {
@@ -558,8 +558,7 @@ function completeBoundary(boundary: BoundaryRawData): BoundaryConvertedData | nu
 				insideBody = true;
 				continue;
 			}
-			//Header name and value /^([\w\d\-]+):\s*([^\r\n]+|)/
-			const match = /^([\w\d\-]+):\s*([^\r\n]+|)/gi.exec(line);
+			const match = /^([\w\d\-]+):\s*([^\r\n]*)/gi.exec(line);
 			if (match) {
 				lastHeaderName = match[1];
 				result.part.headers[lastHeaderName] = match[2];

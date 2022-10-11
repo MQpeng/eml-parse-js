@@ -9,11 +9,14 @@ Content-Type: multipart/alternative; boundary="0000000000003a852505e9cf17b2"
 --0000000000003a852505e9cf17b2
 Content-Type: text/plain; charset="UTF-8"
 
-A small body
+A small body with _underscores.
 
 --0000000000003a852505e9cf17b2
 Content-Type: text/html; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-<div dir="ltr">A small body</div>
+<div dir=3D"ltr">
+ A small body with _underscores.
+</div>
 
 --0000000000003a852505e9cf17b2--

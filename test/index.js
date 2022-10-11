@@ -81,6 +81,9 @@ describe('readEml', () => {
     const eml = fs.readFileSync(src, "utf-8");
     readEml(eml, (_response, obj) => {
       expect(obj.subject).to.equal('A subject with spaces')
+      expect(obj.html).to.equal(
+				`<div dir="ltr"> A small body with _underscores.</div>`
+			);
     });
   })
 

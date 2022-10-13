@@ -97,7 +97,7 @@ describe('readEml should decode', () => {
     expect(readEmlJson.cc.email).to.equal('dummyOutlookEmail2@outlook.com');
   })
 
-  it('multiple reciepients', () => {
+  it('multiple recipients', () => {
     const readEmlJson = readEmlForTest('./fixtures/multipleRecipientsEmail.eml')
     expect(readEmlJson.to.length).to.equal(2);
     expect(readEmlJson.to[0].email).to.equal('dummyOutlookEmail@outlook.com');

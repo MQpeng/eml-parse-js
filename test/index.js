@@ -75,25 +75,58 @@ describe('parseEml should Ok', () => {
   // });
 });
 
-describe('readEml', () => {
-  it('should decode subjects with spaces correctly', () => {
-    const src = path.join(__dirname, "./fixtures/smallEmail.eml");
-    const eml = fs.readFileSync(src, "utf-8");
-    readEml(eml, (_response, obj) => {
-      expect(obj.subject).to.equal('A subject with spaces')
-      expect(obj.html).to.equal(
-				`<div dir="ltr"> A small body with _underscores.</div>`
-			);
-    });
+function readEmlForTest(filepath, encoding = 'utf-8') {
+  const src = path.join(__dirname, filepath);
+  const eml =  fs.readFileSync(src, encoding);
+  return readEml(eml);
+}
+
+describe('readEml should decode', () => {
+
+  it('to and from correctly', () => {
+    const readEmlJson = readEmlForTest('./fixtures/smallEmail.eml');
+    expect(readEmlJson.from.name).to.equal('Nobody there');
+    expect(readEmlJson.from.email).to.equal('dummyEmail@emailClient.com');
+    expect(readEmlJson.to.name).to.equal('Nobody here');
+    expect(readEmlJson.to.email).to.equal('dummyEmail2@emailClient.com');
   })
 
-	it('should decode headers with line breaks correctly', () => {
-		const src = path.join(__dirname, './fixtures/lineBreakInHeader.eml');
-		const eml = fs.readFileSync(src, 'utf-8');
-		readEml(eml, (_response, obj) => {
-			expect(obj.headers.Date).to.equal('Thu, 29 Sep 2022 12:22:20 +0100');
-			expect(obj.headers['Message-ID']).to.equal('\r\n<CAGFso0R6WbMomMx6mFFJzt_wiL8wRm3sN0YQwXz12Ugbt72XSw@mail.gmail.com>');
-			assert.deepEqual(obj.date, new Date('Thu, 29 Sep 2022 12:22:20 +0100'));
-		});
+  it('cc recepient', () => {
+    const readEmlJson = readEmlForTest('./fixtures/multipleRecipientsEmail.eml');
+    expect(readEmlJson.cc).to.exist;
+    expect(readEmlJson.cc.email).to.equal('dummyOutlookEmail2@outlook.com');
+  })
+
+  it('multiple reciepients', () => {
+    const readEmlJson = readEmlForTest('./fixtures/multipleRecipientsEmail.eml')
+    expect(readEmlJson.to.length).to.equal(2);
+    expect(readEmlJson.to[0].email).to.equal('dummyOutlookEmail@outlook.com');
+    expect(readEmlJson.to[1].email).to.equal('dummyGmailEmail@gmail.com');
+  })
+
+  it('subjects with spaces correctly', () => {
+    const readEmlJson = readEmlForTest('./fixtures/smallEmail.eml');
+    expect(readEmlJson.subject).to.equal('Off-The-Beaten-Path Trails You\'ve Never Heard Of!  🌏');
+    expect(readEmlJson.text.trim()).to.equal('A small body with _underscores.');
+  })
+
+	it('headers with line breaks correctly', () => {
+		const readEmlJson = readEmlForTest('./fixtures/lineBreakInHeader.eml');
+    expect(readEmlJson.headers.Date).to.equal('Thu, 29 Sep 2022 12:22:20 +0100');
+    expect(readEmlJson.headers['Message-ID']).to.equal('\r\n<CAGFso0R6WbMomMx6mFFJzt_wiL8wRm3sN0YQwXz12Ugbt72XSw@mail.gmail.com>');
+    assert.deepEqual(readEmlJson.date, new Date('Thu, 29 Sep 2022 12:22:20 +0100'));
+	});
+
+  it('attachments', () => {
+		const readEmlJson = readEmlForTest('./fixtures/emailWithAttachments.eml');
+    expect(readEmlJson.attachments.length).to.equal(2);
+    expect(readEmlJson.attachments[0].name).to.equal('Smalltextfile.txt');
+    expect(readEmlJson.attachments[1].name).to.equal('Smalltextfile2.txt');
+	});
+
+  it('inline attachments', () => {
+		const readEmlJson = readEmlForTest('./fixtures/inlineAttachment.eml');
+    expect(readEmlJson.attachments.length).to.equal(1);
+    expect(readEmlJson.attachments[0].name).to.equal('image.png');
 	});
 })

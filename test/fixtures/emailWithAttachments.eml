@@ -1,0 +1,40 @@
+MIME-Version: 1.0
+Date: Thu, 29 Sep 2022 14:08:35 +0100
+Message-ID: <CAGFso0TE59Bwit7odiFh6EFTPp3Amu3XnGqcys9cAkELoF2DXA@mail.gmail.com>
+Subject: Attachment Email
+From: =?UTF-8?Q?P=C3=A1draig_Weeks?= <dummyEmail2@gmail.com>
+To: =?UTF-8?Q?P=C3=A1draig_Weeks?= <dummyEmail2@gmail.com>
+Content-Type: multipart/mixed; boundary="000000000000384e1705e9d0930b"
+
+
+--000000000000384e1705e9d0930b
+Content-Type: multipart/alternative; boundary="000000000000384e1505e9d09309"
+
+--000000000000384e1505e9d09309
+Content-Type: text/plain; charset="UTF-8"
+
+Little body
+
+--000000000000384e1505e9d09309
+Content-Type: text/html; charset="UTF-8"
+
+<div dir="ltr">Little body</div>
+
+--000000000000384e1505e9d09309--
+--000000000000384e1705e9d0930b
+Content-Type: text/plain; charset="UTF-8"; name="Small text file.txt"
+Content-Disposition: attachment; filename="Small text file.txt"
+Content-Transfer-Encoding: base64
+X-Attachment-Id: f_l8n2o5wn1
+Content-ID: <f_l8n2o5wn1>
+
+77u/U21hbGwgdGV4dCBmaWxlCg==
+--000000000000384e1705e9d0930b
+Content-Type: text/plain; charset="UTF-8"; name="Small text file2.txt"
+Content-Disposition: attachment; filename="Small text file2.txt"
+Content-Transfer-Encoding: base64
+X-Attachment-Id: f_l8n2o5w30
+Content-ID: <f_l8n2o5w30>
+
+77u/U21hbGwgdGV4dCBmaWxlCg==
+--000000000000384e1705e9d0930b--

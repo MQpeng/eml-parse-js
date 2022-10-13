@@ -1,0 +1,156 @@
+Delivered-To: dummyGmailEmail@gmail.com
+Received: by 2002:a05:7300:64c5:b0:7c:ab42:c96f with SMTP id a5csp253938dyg;
+        Thu, 13 Oct 2022 04:08:05 -0700 (PDT)
+X-Google-Smtp-Source: AMsMyM68xVjbOusa9TBeIgkfyCukemPuTm1v1DJ9Dch15CQLqon7YRWaQTkpgnr6O4UlAieiDUt4
+X-Received: by 2002:a17:907:746:b0:741:4a1b:cb1f with SMTP id xc6-20020a170907074600b007414a1bcb1fmr25252532ejb.370.1665659285316;
+        Thu, 13 Oct 2022 04:08:05 -0700 (PDT)
+ARC-Seal: i=2; a=rsa-sha256; t=1665659285; cv=pass;
+        d=google.com; s=arc-20160816;
+        b=qCmxoK58lhmw7OUml6ztPlFduTSUr7zUkIKK+m6HSfP3ufuWJIu0ZT9lfb55U3QsOq
+         YVhG2BNiCehv0IFNbFx1T1SAGFB2oJDy+QEZp1DTpbjs7CFpokKERvJAqfhLoCeVxUIH
+         V75gtUBtP0mcWaygYCGhP666WDQ2mMXtxMQNELTUvisLvatB/WAkpFouMlV8Y5p579Va
+         K98/rH8NcfQOfEXTr/OvVULC892ABW+Py/MudAUa8CvRfbN4KFHuOSFO5wWm6bn/SDEu
+         f8y3PgEsLqih/1NPcGG8uFn31QXH4Eyxw2/mN5Axl2GDTOf/z6H+OIfPQTvEe/lZEndM
+         2Vlg==
+ARC-Message-Signature: i=2; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20160816;
+        h=mime-version:msip_labels:content-language:accept-language
+         :message-id:date:thread-index:thread-topic:subject:cc:to:from
+         :dkim-signature;
+        bh=NPMnNw92qOXB5baPoCKSIUElwKwcRiYNoeYnwbE4azM=;
+        b=zPynY7BxjuYR1A8I5znd+xawggqBCsM+TqFafwQ7Ttd5N4MpjU8FcFVPFhxstUUYue
+         Zx+DVhTMFdpigPfuRV/RWZWPczmp+7qCXezSf9hCv7Yqnwj9LxRZteSd0L32z5vDUDUp
+         jyj+t0Iwcvl60ah48HfAPA5auVJCsffwEPfscBSEhD+w4MjmuBbM9YFBIGWr9PPNVKo8
+         1BpSdK1Ru+isQz2Pb6GbMI0jkJ0RdYrSzbpwbVsB8ZQK2nJR0IJjguignybVpPzSQ9YV
+         T1Ujy+r2sfhDAD/bRcbKNNz9cXQL1MmkTh8sk1X/z8xuZfgbZvYbLqgI2bBFItfuAxd5
+         VxSg==
+ARC-Authentication-Results: i=2; mx.google.com;
+       dkim=pass header.i=@outlook.com header.s=selector1 header.b=PAqsO5kx;
+       arc=pass (i=1);
+       spf=pass (google.com: domain of connectiontest6765@outlook.com designates 40.92.91.62 as permitted sender) smtp.mailfrom=connectionTest6765@outlook.com;
+       dmarc=pass (p=NONE sp=QUARANTINE dis=NONE) header.from=outlook.com
+Return-Path: <connectionTest6765@outlook.com>
+Received: from EUR05-AM6-obe.outbound.protection.outlook.com (mail-am6eur05olkn2062.outbound.protection.outlook.com. [40.92.91.62])
+        by mx.google.com with ESMTPS id s19-20020aa7c553000000b0045ca3644a63si3857261edr.546.2022.10.13.04.08.05
+        for <dummyGmailEmail@gmail.com>
+        (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
+        Thu, 13 Oct 2022 04:08:05 -0700 (PDT)
+Received-SPF: pass (google.com: domain of connectiontest6765@outlook.com designates 40.92.91.62 as permitted sender) client-ip=40.92.91.62;
+Authentication-Results: mx.google.com;
+       dkim=pass header.i=@outlook.com header.s=selector1 header.b=PAqsO5kx;
+       arc=pass (i=1);
+       spf=pass (google.com: domain of connectiontest6765@outlook.com designates 40.92.91.62 as permitted sender) smtp.mailfrom=connectionTest6765@outlook.com;
+       dmarc=pass (p=NONE sp=QUARANTINE dis=NONE) header.from=outlook.com
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
+ b=aTISBcP7zDP0yTO5j8FyDKofeB0o3XEviiWmua/YxvZedD0nmgb7nvUfOjKz7NtVYMNHcFx1BlTNUNqkxu2iuLjBJ8H06PHGF7tYIv6cVNDHP2kFyPnOE6UJilpZ4MyN10vf5JTaZVhtfztLN53CDGwECZU/YzYBMFBVh7LLcDcR7Ne/uZKyV2YrXk7SNpeF4qopnAlsuVkszpcxEuV9bqPm3L9zswe1MMc/RLqcMIih5qyercX0NiwEkyFVn3pmaAkdzMlCqlPNu2/EDfUEG4Opmwl3YMJlqmj+yMCcGajVpmwU+pCSRrtGZrxYnufNbXUDNIvarhGZCzRTcDp1hg==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
+ s=arcselector9901;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=NPMnNw92qOXB5baPoCKSIUElwKwcRiYNoeYnwbE4azM=;
+ b=JOMU26U/tDQcxiVKV31C/9+o1egdxFmDY7LIuRrOXUygwFPrppVDBIS93KYQIGiu5OnjfG1enP4Mp8uuePQ76DzNWdk/u43I8gdsuZ/ydt6FyLf97o+0iMmHd11hkMhYYda6BMkWlplLonBdTgv6TCN0TP9kQABZRMFjp2YFJw1B95Nq298t0ELEe+0jkzSlxxtvmpzeHNrOkeE8ZWVuKcHFLtlebLmCM1vMx/zN0YPPxaMszKvabuRyUWXOiYq2PU6VE1qitH9Fb7jwC1i2WAj2PMR01RqU/PXiTrgT/A0N35MQGEZweWTreytFXBunRh5YKLoLJo2kLcj2doL1IQ==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=none; dmarc=none;
+ dkim=none; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=outlook.com;
+ s=selector1;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=NPMnNw92qOXB5baPoCKSIUElwKwcRiYNoeYnwbE4azM=;
+ b=PAqsO5kxOKf/y9mm5CNY3tZseEJ/0rkVmsYrpa1Y8kF1Ob1IHFnmVvW+Egl9Udb555OEEK7K+ad3xBZ1Ddf358WdnTIVwzk4H7mmzclQyAcGFNpL7crZJVS7PjZWsNF9NF7RI9ZMMUMSTwolMo7Ftodps5BG4xyKzsSEafvLJhuQ6OUcy/b98RUK0qfoOe3tBtrzsW6qW7awrm73QNU2iJjaIKqek7HpKj6nziLuI4LyIX1uywYPwXlpTXywutiSzlaik/qA3DrARDfg6G+gyUln1ZODMrAiVCQTMLgg/nRkBaH3KVJYe+VZmPoju51JHyVKfxgEHO7J2HJw48/kjw==
+Received: from AM0PR04MB5635.eurprd04.prod.outlook.com (2603:10a6:208:127::20)
+ by VI1PR04MB6845.eurprd04.prod.outlook.com (2603:10a6:803:138::11) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.5723.26; Thu, 13 Oct
+ 2022 11:08:04 +0000
+Received: from AM0PR04MB5635.eurprd04.prod.outlook.com
+ ([fe80::9089:621e:b435:ace3]) by AM0PR04MB5635.eurprd04.prod.outlook.com
+ ([fe80::9089:621e:b435:ace3%7]) with mapi id 15.20.5709.015; Thu, 13 Oct 2022
+ 11:08:04 +0000
+From: =?iso-8859-1?Q?P=E1draig_Weeks?= <dummyOutlookEmail@outlook.com>
+To: =?iso-8859-1?Q?P=E1draig_Weeks?= <dummyOutlookEmail@outlook.com>,
+	"dummyGmailEmail@gmail.com" <dummyGmailEmail@gmail.com>
+CC: =?iso-8859-1?Q?Dummy_Email= <dummyOutlookEmail2@outlook.com>
+Subject: Multiple recipients
+Thread-Topic: Multiple recipients
+Thread-Index: AQHY3vPRH7aFSqcre0SnvdVO7GgIVg==
+Date: Thu, 13 Oct 2022 11:08:04 +0000
+Message-ID:
+ <AM0PR04MB56350276EC5CD2D2AF376333DE259@AM0PR04MB5635.eurprd04.prod.outlook.com>
+Accept-Language: en-GB, en-US
+Content-Language: en-GB
+X-MS-Has-Attach:
+X-MS-TNEF-Correlator:
+msip_labels:
+x-tmn:
+ [Ax7FXQOMrStAhg2WvTZf0hrsbAEkAyP+R+DjWSecMLPG0vkOBnd+UcJByBonWLfvyQGOwcdsyOI=]
+x-ms-publictraffictype: Email
+x-ms-traffictypediagnostic: AM0PR04MB5635:EE_|VI1PR04MB6845:EE_
+x-ms-office365-filtering-correlation-id: 162d1109-a285-437a-d183-08daad0b334f
+x-ms-exchange-slblob-mailprops:
+ vQx3cGk1+xwj6ivwbQgvYBwT+VFhwnbzcTsvl+nrJLnBAH3JLuBEKeRBHO8vEoRkJOUymf9PmTrq6LusIZD3PJtVKl/RVjJl8HWlR7cnd7T3Qe/oyhVYU5MmXqtepPvpUUb5KdJSeeZhSnQuouZ1Dh5AgEDO4SGwlegyWztnDothpF/MqhRMfvc2j8F/2h+iF8rSoBRsTOyyC1lb31nRu6cMHB+Zse9bKZSluDK3Q3LGbuPsPvpDKgx0c6LfptTxLEjnqJoNE7ASxjIRiZ1z9RAHXvSqC/kZa2xb359NDC6HxIQh6Iz/z91Ar3ByNd9dGUJyE0xh/LXJ3NnZfb0mK/xs5xPWd4jDQSKlZYQQGstVP10EnUaOYtKGUISVFJxv5DLdMdQBW+qiczTSPGP6qZqiYHyaj7D5cBvwbJSfYOEOO/u9xPLkoKnBd+aK8O+UITtpxQjHkvGxlfEysOvvnuhWfq2iGhU/Mrkj9PqcRw7exCUXXHLZMLmY9riMh3cDrtJL1mRQjpEu2ImwTevw773VA20ce0xqU7oMylI2hpccTzxYshdHgDu++kn43qbBshzad9a1k4GfJT1OCNQWP+rduz+KrqiefxqM2j9a7Jk=
+x-microsoft-antispam: BCL:0;
+x-microsoft-antispam-message-info:
+ kFObx6SKCgE6PFdouKk93f34iM7zxzDRJnrvXDzRi8B4+2sBnmePMx59eiCk/D3q4nA48kk9b3EodLUL689aRbXC3D6cpLUvhfw9mGMc9Enc3x0c7KC48XzMfmRH4Vrs/A8n97pKt/uAZsD0a1vgsK5TIqWy4B/EgKiQx/qZnv6Wjk6JDrb3c7FTR9/t5vQLQ1VdVchBxYPE4Pn+Qwe/w0FuNO5jj8/L43N4Fg3nct5dO0njAr+5oXVrnmlz0ArbjH61XDYCVaq5gYAF6TKWuYJpXdjzkfVBOPu5MsWpZisGqD2dy5J4djxEhqLibQyPFCrqOtq8ouTcFeHA2+mC4GrKr0v3+q19zcC5784YytNZd3MSy7jcxXv01WRF9oyCVoNaQT8jrLkzL6Yhurb+36CzRBpyIhoLF6jCiFvj9E03KmLDhfkx7maKfvxlup5E
+x-ms-exchange-antispam-messagedata-chunkcount: 1
+x-ms-exchange-antispam-messagedata-0:
+ =?iso-8859-1?Q?Kr42ry4e5A1lSgFaBH00WECVqk4E1N25I4DcY/dVKa3gWX2Y9rywdTmRpO?=
+ =?iso-8859-1?Q?9e2u45yhToGPONl4lFhdIHavQe47CERpfGiGaaLmEAheWsJIXgcQ/knjlk?=
+ =?iso-8859-1?Q?T6IvudwZPLG5y/JW52H1O0I1+yGLef/TArYxgprfv8JbOcgkjbywBydh0u?=
+ =?iso-8859-1?Q?KHUxBfNvduYn8q2/YnMaKjADBd36UUswUTJKpLV5ZLtOfx6qY3c5b94GD4?=
+ =?iso-8859-1?Q?wLbhjeVmm6DgmDDZ1Jwh4B2A1IkociETqNoEGG6zeT70YER74Bruj/ke61?=
+ =?iso-8859-1?Q?/3fwwdDnwIZvH+6wgANEXsvMmHDV4/ZQ1P9o8ZkmdsQUceIYVSqWEz3o0/?=
+ =?iso-8859-1?Q?5idRu3FE0e913eK7T8Hnc0Hie1pzc5yiXgQf0etkkTzBIEkeJAUZ476rxm?=
+ =?iso-8859-1?Q?8D3Vx0zps0fNdtGDv0PpqMCKjYigz0gD5rchbjW5WDgWBPEECNRcUiRNSm?=
+ =?iso-8859-1?Q?BakdnR/G5vEZglsKlYsej95YmO9y2k8klzze9Pg7kgg0tFK7u2Oy/Zws9u?=
+ =?iso-8859-1?Q?EN0Tz0qPAOpSCU1G8Ycl0kQB75hV7rNncTe77BsSxuxzUsvtD7ttggMOeX?=
+ =?iso-8859-1?Q?C/sTFiWF11TRiqlH9xTnVSrZfVYOPuNjRYzbXmE0h2EWoZfdYhazMvbBTd?=
+ =?iso-8859-1?Q?PfSDm03bbnIJomXXHph6cQHEocI2oeyFI76jkE0xNZ8T8hN0PB7XBX281e?=
+ =?iso-8859-1?Q?jmFNBsZUP3rHY4NLgYlE4nev9DYYHPz9AiS25UpKAh759Cj3W5Nndj5ODK?=
+ =?iso-8859-1?Q?ljnwLyE/e3ZXPvzTuO6hHnz8P0OuGDWNotreHaR+iqMIVQPPgg+mxoMQNf?=
+ =?iso-8859-1?Q?EuunSIQVKz2hUMAEYZssvX3wRTU5IsBJtFoHkrz7hbId7/JMu3oZVriZ5a?=
+ =?iso-8859-1?Q?zEnwFuoXsI3GZh/kpCFwJC5Q4RfkfRToddtF3bBYdbQe2WLBPU4lZ40dow?=
+ =?iso-8859-1?Q?wDrsXeTtAfBz9J0l9sTv+uiIvXM+bzKkX/Omum14sl+zYn/k18E+LFDoeI?=
+ =?iso-8859-1?Q?FS1WxCd6Wm1yF3m/jjkZSAOay/NgZbX7H9jPdHbOVFi/Px5MNCFTgd4A9B?=
+ =?iso-8859-1?Q?NGLQsu1d6Nom1IKk7bfc6e1nkD8rPowEhN9emexpQnsjypWHGBv4HydiME?=
+ =?iso-8859-1?Q?z81l1Miok27pYssL0qtW0TFKCSwanLiRQMmsEcuk2BC9etJtU0A7nmhCs6?=
+ =?iso-8859-1?Q?CL5sYBbM7tuzvsr6SsM8eEaNvgnuH8HE2qDoPREl8ujiLf/XqFQcQLdWwi?=
+ =?iso-8859-1?Q?zyOA9PRIff1sYXGvbUf/xDzUPFzWLFXqApvsuOzjYu19+qYw1h2D8xh15h?=
+ =?iso-8859-1?Q?7OiAihvwcyiwBY6wgyqh9p7WHgGEOxxsEXgjsdyxzvVORbdw3SyBnl9J3p?=
+ =?iso-8859-1?Q?KmPjZTqOu+wm4oVY80ijU3bDIJjJ9F91KuknWwmMACYWUd1LgxfMc=3D?=
+Content-Type: multipart/alternative;
+	boundary="_000_AM0PR04MB56350276EC5CD2D2AF376333DE259AM0PR04MB5635eurp_"
+MIME-Version: 1.0
+X-OriginatorOrg: outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-AuthSource: AM0PR04MB5635.eurprd04.prod.outlook.com
+X-MS-Exchange-CrossTenant-RMS-PersistedConsumerOrg: 00000000-0000-0000-0000-000000000000
+X-MS-Exchange-CrossTenant-Network-Message-Id: 162d1109-a285-437a-d183-08daad0b334f
+X-MS-Exchange-CrossTenant-originalarrivaltime: 13 Oct 2022 11:08:04.3304
+ (UTC)
+X-MS-Exchange-CrossTenant-fromentityheader: Hosted
+X-MS-Exchange-CrossTenant-id: 84df9e7f-e9f6-40af-b435-aaaaaaaaaaaa
+X-MS-Exchange-CrossTenant-rms-persistedconsumerorg: 00000000-0000-0000-0000-000000000000
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: VI1PR04MB6845
+
+--_000_AM0PR04MB56350276EC5CD2D2AF376333DE259AM0PR04MB5635eurp_
+Content-Type: text/plain; charset="iso-8859-1"
+Content-Transfer-Encoding: quoted-printable
+
+A body
+
+--_000_AM0PR04MB56350276EC5CD2D2AF376333DE259AM0PR04MB5635eurp_
+Content-Type: text/html; charset="iso-8859-1"
+Content-Transfer-Encoding: quoted-printable
+
+<html>
+<head>
+<meta http-equiv=3D"Content-Type" content=3D"text/html; charset=3Diso-8859-=
+1">
+<style type=3D"text/css" style=3D"display:none;"> P {margin-top:0;margin-bo=
+ttom:0;} </style>
+</head>
+<body dir=3D"ltr">
+<div style=3D"font-family: Calibri, Arial, Helvetica, sans-serif; font-size=
+: 12pt; color: rgb(0, 0, 0);" class=3D"elementToProof">
+A body</div>
+</body>
+</html>
+
+--_000_AM0PR04MB56350276EC5CD2D2AF376333DE259AM0PR04MB5635eurp_--

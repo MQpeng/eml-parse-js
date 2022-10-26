@@ -144,6 +144,7 @@ declare function unquoteString(str: string): string;
  * Decodes 'quoted-printable'
  * @param {String} value
  * @param {String} charset
+ * @param {String} qEncoding whether the encoding is RFC-2047’s Q-encoding, meaning special handling of underscores.
  * @returns {String}
  */
 declare function unquotePrintable(value: string, charset?: string, qEncoding?: boolean): string;

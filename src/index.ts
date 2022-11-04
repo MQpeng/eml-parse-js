@@ -860,7 +860,10 @@ function read(
 			result.html = content.replace(/\r\n|(&quot;)/g, '').replace(/\"/g, `"`);
 
 			try {
-				if (Base64.btoa(Base64.atob(result.html)) == result.html) {
+				if (encoding === 'base64') {
+          result.html = Base64.decode(result.html);
+        }
+				else if (Base64.btoa(Base64.atob(result.html)) == result.html) {
 					result.html = Base64.atob(result.html);
 				}
 			} catch (error) {
@@ -875,6 +878,9 @@ function read(
 		} else if (!result.text && contentType && contentType.indexOf('text/plain') >= 0) {
 			if (typeof content !== 'string') {
 				content = decode(content as Uint8Array, charset);
+			}
+			if (encoding === 'base64') {
+				content = Base64.decode(content);
 			}
 			//Plain text message
 			result.text = content;

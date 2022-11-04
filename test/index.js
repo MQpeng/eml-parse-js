@@ -108,6 +108,7 @@ describe('readEml should decode', () => {
     const readEmlJson = readEmlForTest('./fixtures/smallEmail.eml');
     expect(readEmlJson.subject).to.equal('Off-The-Beaten-Path Trails You\'ve Never Heard Of!  🌏');
     expect(readEmlJson.text.trim()).to.equal('A small body with _underscores.');
+    expect(readEmlJson.html).to.contain('A small body with _underscores');
   })
 
 	it('headers with line breaks correctly', () => {
@@ -129,4 +130,11 @@ describe('readEml should decode', () => {
     expect(readEmlJson.attachments.length).to.equal(1);
     expect(readEmlJson.attachments[0].name).to.equal('image.png');
 	});
+
+  it('base64 encoded html body', () => {
+    const readEmlJson = readEmlForTest('./fixtures/unicode.eml');
+    expect(readEmlJson.text).to.contain('コピーボタンをクリックすると');
+    expect(readEmlJson.html).to.contain('コピーボタンをクリックすると');
+  });
+
 })

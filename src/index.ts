@@ -861,8 +861,8 @@ function read(
 
 			try {
 				if (encoding === 'base64') {
-          result.html = Base64.decode(result.html);
-        }
+					result.html = Base64.decode(result.html);
+				}
 				else if (Base64.btoa(Base64.atob(result.html)) == result.html) {
 					result.html = Base64.atob(result.html);
 				}

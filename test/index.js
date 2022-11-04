@@ -131,7 +131,7 @@ describe('readEml should decode', () => {
     expect(readEmlJson.attachments[0].name).to.equal('image.png');
 	});
 
-  it('base64 encoded html body', () => {
+  it('base64 encoded text and html body', () => {
     const readEmlJson = readEmlForTest('./fixtures/unicode.eml');
     expect(readEmlJson.text).to.contain('コピーボタンをクリックすると');
     expect(readEmlJson.html).to.contain('コピーボタンをクリックすると');

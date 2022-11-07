@@ -1,5 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
+exports.GB2312UTF8 = exports.isStringOrError = exports.mimeDecode = exports.wrap = exports.guid = exports.getCharsetName = exports.getBoundary = void 0;
 var charset_1 = require("./charset");
 /**
  * Gets the boundary name

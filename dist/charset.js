@@ -1,5 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
+exports.convert = exports.decode = exports.arr2str = exports.encode = void 0;
 var text_encoding_1 = require("text-encoding");
 /**
  * Encodes an unicode string into an Uint8Array object as UTF-8

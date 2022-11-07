@@ -1,18 +1,19 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
+exports.GBKUTF8 = exports.buildEml = exports.readEml = exports.parseEml = exports.completeBoundary = exports.decode = exports.encode = exports.convert = exports.Base64 = exports.mimeDecode = exports.unquotePrintable = exports.unquoteString = exports.getCharset = exports.getBoundary = exports.createBoundary = exports.toEmailAddress = exports.getEmailAddress = void 0;
 /**
  * @author superchow
  * @emil superchow@live.cn
  */
 var js_base64_1 = require("js-base64");
-exports.Base64 = js_base64_1.Base64;
+Object.defineProperty(exports, "Base64", { enumerable: true, get: function () { return js_base64_1.Base64; } });
 var charset_1 = require("./charset");
-exports.convert = charset_1.convert;
-exports.decode = charset_1.decode;
-exports.encode = charset_1.encode;
+Object.defineProperty(exports, "convert", { enumerable: true, get: function () { return charset_1.convert; } });
+Object.defineProperty(exports, "decode", { enumerable: true, get: function () { return charset_1.decode; } });
+Object.defineProperty(exports, "encode", { enumerable: true, get: function () { return charset_1.encode; } });
 var utils_1 = require("./utils");
-exports.GBKUTF8 = utils_1.GB2312UTF8;
-exports.mimeDecode = utils_1.mimeDecode;
+Object.defineProperty(exports, "GBKUTF8", { enumerable: true, get: function () { return utils_1.GB2312UTF8; } });
+Object.defineProperty(exports, "mimeDecode", { enumerable: true, get: function () { return utils_1.mimeDecode; } });
 /**
  * log for test
  */
@@ -274,7 +275,6 @@ exports.parseEml = parse;
  * @returns {ParsedEmlJson}
  */
 function parseRecursive(lines, start, parent, options) {
-    var _a, _b, _c;
     var boundary = null;
     var lastHeaderName = '';
     var findBoundary = '';
@@ -373,15 +373,15 @@ function parseRecursive(lines, start, parent, options) {
                 }
                 if (insideBoundary) {
                     //Search for boundary end
-                    if (((_a = boundary) === null || _a === void 0 ? void 0 : _a.boundary) && lines[i - 1] == '' && line.indexOf('--' + findBoundary + '--') == 0) {
+                    if ((boundary === null || boundary === void 0 ? void 0 : boundary.boundary) && lines[i - 1] == '' && line.indexOf('--' + findBoundary + '--') == 0) {
                         insideBoundary = false;
                         complete(boundary);
                         continue;
                     }
-                    if (((_b = boundary) === null || _b === void 0 ? void 0 : _b.boundary) && line.indexOf('--' + findBoundary + '--') == 0) {
+                    if ((boundary === null || boundary === void 0 ? void 0 : boundary.boundary) && line.indexOf('--' + findBoundary + '--') == 0) {
                         continue;
                     }
-                    (_c = boundary) === null || _c === void 0 ? void 0 : _c.lines.push(line);
+                    boundary === null || boundary === void 0 ? void 0 : boundary.lines.push(line);
                 }
             }
             else {
@@ -714,7 +714,10 @@ function read(eml, options, callback) {
             //Message in HTML format
             result.html = content.replace(/\r\n|(&quot;)/g, '').replace(/\"/g, "\"");
             try {
-                if (js_base64_1.Base64.btoa(js_base64_1.Base64.atob(result.html)) == result.html) {
+                if (encoding === 'base64') {
+                    result.html = js_base64_1.Base64.decode(result.html);
+                }
+                else if (js_base64_1.Base64.btoa(js_base64_1.Base64.atob(result.html)) == result.html) {
                     result.html = js_base64_1.Base64.atob(result.html);
                 }
             }
@@ -730,6 +733,9 @@ function read(eml, options, callback) {
         else if (!result.text && contentType && contentType.indexOf('text/plain') >= 0) {
             if (typeof content !== 'string') {
                 content = charset_1.decode(content, charset);
+            }
+            if (encoding === 'base64') {
+                content = js_base64_1.Base64.decode(content);
             }
             //Plain text message
             result.text = content;

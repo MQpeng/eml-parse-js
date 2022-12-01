@@ -9,6 +9,8 @@ const {
   buildEml,
 } = require('../dist/index.js')
 
+const glob = require('glob');
+
 function _read(strOrObj, fileName) {
   readEml(strOrObj, function (error, data) {
     console.error(error);
@@ -34,45 +36,14 @@ function _parse(eml, fileName) {
 
 
 describe('parseEml should Ok', () => {
-  // it('123 should Ok', () => {
-  //   const src = path.join(__dirname, "./fixtures/123.eml");
-  //   const eml = fs.readFileSync(src, "utf-8");
-  //   _read(eml, '123');
-  // }).timeout(10000);
-  // it('InfoQ should Ok', () => {
-  //   const src = path.join(__dirname, "./fixtures/InfoQ.eml");
-  //   const eml = fs.readFileSync(src, "utf-8");
-  //   _parse(eml, 'InfoQ');
-  // });
-  // it('npm should Ok', () => {
-  //   const src = path.join(__dirname, "./fixtures/npm.eml");
-  //   const eml = fs.readFileSync(src, "utf-8");
-  //   _parse(eml, 'npm');
-  // });
-  // it('multipart should Ok', () => {
-  //   const src = path.join(__dirname, "./fixtures/multipart.eml");
-  //   const eml = fs.readFileSync(src, "utf-8");
-  //   readEml(eml, function(error, data) {
-  //     if(error) {
-  //       console.error(error);
-  //     }
-  //     const writeSrc = path.join(__dirname, "./readed/multipart.json");
-  //     fs.writeFileSync(writeSrc, JSON.stringify(data, " ", 2));
-  //     _build(data, 'multipart');
-  //   });
-  // });
-  // it('cc should Ok', () => {
-  //   const src = path.join(__dirname, "./fixtures/cc.eml");
-  //   const eml = fs.readFileSync(src, "utf-8");
-  //   readEml(eml, function(error, data) {
-  //     if(error) {
-  //       console.error(error);
-  //     }
-  //     const writeSrc = path.join(__dirname, "./readed/cc.json");
-  //     fs.writeFileSync(writeSrc, JSON.stringify(data, " ", 2));
-  //     _build(data, 'cc');
-  //   });
-  // });
+  it('fixtures/*.eml should Ok', () => {
+    console.log('path.join(__dirname, "./fixtures/**/*.eml")', path.join(__dirname, "./fixtures/*.eml"));
+    glob(path.join(__dirname, "./fixtures/**/*.eml"), (err, file) => {
+      console.log("🚀 ~ file: index.js ~ line 45 ~ glob ~ val", file)
+      
+    })
+    // _read(eml, '123');
+  })
 });
 
 function readEmlForTest(filepath, encoding = 'utf-8') {

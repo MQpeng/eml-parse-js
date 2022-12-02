@@ -7,6 +7,16 @@
 	"es2015": "./lib/bundle.esm.js",
 	"esm5": "./lib/bundle.esm.js",
 	"typings": "./dist/index.d.ts",
+	"types": "./dist/index.d.ts",
+	"exports": {
+		".": {
+			"types": "./types/index.d.ts",
+			"node": "./lib/bundle.cjs.js",
+			"require": "./lib/bundle.cjs.js",
+			"es2015": "./lib/bundle.esm.js",
+			"default": "./lib/bundle.esm.js"
+		}
+	},
 	"scripts": {
 		"build": "tsc",
 		"build:es": "tsc -p ./tsconfig.es2015.json",
@@ -27,7 +37,7 @@
 	},
 	"files": [
 		"src",
-		"dist",
+		"dist/index.d.ts",
 		"lib"
 	],
 	"private": false,

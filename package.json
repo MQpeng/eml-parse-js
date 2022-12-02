@@ -69,6 +69,7 @@
 		"typescript": "^3.7.3"
 	},
 	"dependencies": {
+		"@sinonjs/text-encoding": "^0.7.2",
 		"js-base64": "^3.7.2",
 		"text-encoding": "^0.7.0"
 	},

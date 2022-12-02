@@ -832,6 +832,8 @@ function read(
 	//Appends the boundary to the result
 	function _append(headers: EmlHeaders, content: string | Uint8Array | Attachment, result: ReadedEmlJson) {
 		const contentType = headers['Content-Type'] || headers['Content-type'];
+		const contentDisposition = headers['Content-Disposition']
+
 		const charset = getCharsetName(getCharset(contentType as string) || defaultCharset);
 		let encoding = headers['Content-Transfer-Encoding'] || headers['Content-transfer-encoding'];
 		if (typeof encoding === 'string') {
@@ -852,7 +854,7 @@ function read(
 			content = decode(content as Uint8Array, charset);
 		}
 
-		if (contentType && contentType.indexOf('text/html') >= 0) {
+		if (!contentDisposition && contentType && contentType.indexOf('text/html') >= 0) {
 			if (typeof content !== 'string') {
 				content = decode(content as Uint8Array, charset);
 			}
@@ -881,7 +883,7 @@ function read(
 				'Content-Transfer-Encoding': encoding || '',
 			};
 			// self boundary Not used at conversion
-		} else if (contentType && contentType.indexOf('text/plain') >= 0) {
+		} else if (!contentDisposition && contentType && contentType.indexOf('text/plain') >= 0) {
 			if (typeof content !== 'string') {
 				content = decode(content as Uint8Array, charset);
 			}

@@ -61,7 +61,6 @@
 	"devDependencies": {
 		"@types/node": "^17.0.21",
 		"@types/ramda": "^0.26.36",
-		"@types/text-encoding": "0.0.35",
 		"@typescript-eslint/eslint-plugin": "^2.11.0",
 		"@typescript-eslint/parser": "^2.11.0",
 		"chai": "^4.2.0",

@@ -22,7 +22,7 @@ export default {
 			name: 'EmlParseJs',
 			globals: {
 				'js-base64': 'Base64',
-				'text-encoding': 'self'
+				'@sinonjs/text-encoding': 'self'
 			}
 		},
 		{
@@ -30,7 +30,7 @@ export default {
 			file: "lib/bundle.iife.js",
 			globals: {
 				'js-base64': 'Base64 || (window || this).Base64',
-				'text-encoding': `{
+				'@sinonjs/text-encoding': `{
 					TextEncoder: (window || this)['TextEncoder'],
 					TextDecoder: (window || this)['TextDecoder'],
 				}`,
@@ -40,12 +40,10 @@ export default {
 	plugins: [
 		typescript(),
 		resolve({
-			// 将自定义选项传递给解析插件
 			customResolveOptions: {
 				moduleDirectory: 'node_modules'
 			}
 		})
 	],
-  // 指出应将哪些模块视为外部模块
-  external: ['js-base64', 'text-encoding']
+  external: ['js-base64', '@sinonjs/text-encoding']
 };

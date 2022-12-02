@@ -1,4 +1,4 @@
-import { TextDecoder, TextEncoder } from 'text-encoding';
+import { TextDecoder, TextEncoder } from '@sinonjs/text-encoding';
 
 /**
  * Encodes an unicode string into an Uint8Array object as UTF-8

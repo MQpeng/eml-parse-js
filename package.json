@@ -7,6 +7,16 @@
 	"es2015": "./lib/bundle.esm.js",
 	"esm5": "./lib/bundle.esm.js",
 	"typings": "./dist/index.d.ts",
+	"types": "./dist/index.d.ts",
+	"exports": {
+		".": {
+			"types": "./types/index.d.ts",
+			"node": "./lib/bundle.cjs.js",
+			"require": "./lib/bundle.cjs.js",
+			"es2015": "./lib/bundle.esm.js",
+			"default": "./lib/bundle.esm.js"
+		}
+	},
 	"scripts": {
 		"build": "tsc",
 		"build:es": "tsc -p ./tsconfig.es2015.json",
@@ -27,7 +37,7 @@
 	},
 	"files": [
 		"src",
-		"dist",
+		"dist/index.d.ts",
 		"lib"
 	],
 	"private": false,
@@ -51,7 +61,6 @@
 	"devDependencies": {
 		"@types/node": "^17.0.21",
 		"@types/ramda": "^0.26.36",
-		"@types/text-encoding": "0.0.35",
 		"@typescript-eslint/eslint-plugin": "^2.11.0",
 		"@typescript-eslint/parser": "^2.11.0",
 		"chai": "^4.2.0",
@@ -69,6 +78,7 @@
 		"typescript": "^3.7.3"
 	},
 	"dependencies": {
+		"@sinonjs/text-encoding": "^0.7.2",
 		"js-base64": "^3.7.2",
 		"text-encoding": "^0.7.0"
 	},

@@ -1,6 +1,6 @@
 {
 	"name": "eml-parse-js",
-	"version": "1.1.5",
+	"version": "1.1.6",
 	"description": "format EML file in browser env",
 	"main": "./lib/bundle.umd.js",
 	"module": "./lib/bundle.esm.js",
@@ -36,8 +36,10 @@
 		"ci": "npm install"
 	},
 	"files": [
-		"src",
 		"dist/index.d.ts",
+		"dist/charset.d.ts",
+		"dist/utils.d.ts",
+		"src",
 		"lib"
 	],
 	"private": false,

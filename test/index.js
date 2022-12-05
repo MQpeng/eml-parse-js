@@ -7,7 +7,7 @@ const {
   readEml,
   parseEml,
   buildEml,
-} = require('../dist/index.js')
+} = require('../dist/index.js');
 
 function _read(strOrObj, fileName) {
   readEml(strOrObj, function (error, data) {
@@ -137,4 +137,9 @@ describe('readEml should decode', () => {
     expect(readEmlJson.html).to.contain('コピーボタンをクリックすると');
   });
 
+  it('has the same textual content by text and html', () => {
+		const readEmlJson = readEmlForTest('./fixtures/emailWithAttachments.eml');
+    expect(readEmlJson.html).to.contain('Little body');
+    expect(readEmlJson.text).to.contain('Little body');
+	});
 })

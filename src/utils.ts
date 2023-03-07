@@ -25,7 +25,7 @@ export function guid() {
 
 //Word-wrap the string 's' to 'i' chars per row
 export function wrap(s: string, i: number) {
-	const a = [];
+	const a = [] as any[];
 	do {
 		a.push(s.substring(0, i));
 	} while ((s = s.substring(i, s.length)) != '');

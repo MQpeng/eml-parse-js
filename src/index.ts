@@ -1,121 +1,3 @@
-export interface KeyValue extends Object {
-	[k: string]: any;
-}
-
-export interface EmailAddress {
-	name: string;
-	email: string;
-}
-
-/**
- * parse result
- */
-export interface ParsedEmlJson {
-	headers: EmlHeaders;
-	body?: string | (BoundaryConvertedData | null)[];
-}
-
-/**
- * read result
- */
-export interface ReadedEmlJson {
-	date: Date | string;
-	subject: string;
-	from: EmailAddress | EmailAddress[] | null;
-	to: EmailAddress | EmailAddress[] | null;
-	cc?: EmailAddress | EmailAddress[] | null;
-	headers: EmlHeaders;
-	multipartAlternative?: {
-		'Content-Type': string;
-	};
-	text?: string;
-	textheaders?: BoundaryHeaders;
-	html?: string;
-	htmlheaders?: BoundaryHeaders;
-	attachments?: Attachment[];
-	// data not be build
-	// if have EMl can find `data`, maybe I will know how to do
-	data?: string;
-}
-
-/**
- * Attachment file
- */
-export interface Attachment {
-	name: string;
-	contentType: string;
-	inline: boolean;
-	data: string | Uint8Array;
-	data64: string;
-	filename?: string;
-	mimeType?: string;
-	id?: string;
-	cid?: string;
-}
-
-/**
- * EML headers
- * @description `MIME-Version`, `Accept-Language`, `Content-Language` and `Content-Type` shuld Must exist when to build a EML file
- */
-export interface EmlHeaders extends KeyValue {
-	Date?: string;
-	Subject?: string;
-	From?: string;
-	To?: string;
-	Cc?: string;
-	CC?: string;
-	'Content-Disposition'?: string | null;
-	'Content-Type'?: string | null;
-	'Content-Transfer-Encoding'?: string;
-	'MIME-Version'?: string;
-	'Content-ID'?: string;
-	//  zh-CN, en-US
-	'Accept-Language'?: string;
-	// zh-CN
-	'Content-Language'?: string;
-	// Why not all ?
-	// OutLook is follows
-	'Content-type'?: string | null;
-	'Content-transfer-encoding'?: string;
-}
-
-export interface Options {
-	headersOnly: boolean;
-}
-/**
- * encode is not realized yet
- */
-export interface BuildOptions extends Options {
-	encode?: boolean; // Not realized yet
-}
-
-export type CallbackFn<T> = (error: any, result?: T) => void;
-
-export type OptionOrNull = Options | null;
-
-/**
- * BoundaryRawData
- */
-export interface BoundaryRawData {
-	boundary: string;
-	lines: string[];
-}
-/**
- * Convert BoundaryRawData result
- */
-export interface BoundaryConvertedData {
-	boundary: string;
-	part: {
-		headers: BoundaryHeaders;
-		body: string | Array<BoundaryConvertedData | string>;
-	};
-}
-export interface BoundaryHeaders extends KeyValue {
-	'Content-Type': string;
-	'Content-Transfer-Encoding'?: string;
-	'Content-Disposition'?: string;
-}
-
 /**
  * @author superchow
  * @emil superchow@live.cn
@@ -125,6 +7,21 @@ import { Base64 } from 'js-base64';
 
 import { convert, decode, encode } from './charset';
 import { GB2312UTF8, getCharsetName, guid, mimeDecode, wrap } from './utils';
+import {
+	KeyValue,
+	EmailAddress,
+	ParsedEmlJson,
+	ReadedEmlJson,
+	Attachment,
+	EmlHeaders,
+	Options,
+	BuildOptions,
+	CallbackFn,
+	OptionOrNull,
+	BoundaryRawData,
+	BoundaryConvertedData,
+} from './interface';
+import { addressparser } from './addressparser';
 
 /**
  * log for test
@@ -219,45 +116,10 @@ function getCharset(contentType: string) {
  * @param {String} raw
  * @returns { EmailAddress | EmailAddress[] | null}
  */
-function getEmailAddress(raw: string): EmailAddress | EmailAddress[] | null {
-	const list: EmailAddress[] = [];
-
-	//Split around ',' char
-	//const parts = raw.split(/,/g); //Will also split ',' inside the quotes
-	//const parts = raw.match(/('.*?'|[^',\s]+)(?=\s*,|\s*$)/g); //Ignore ',' within the double quotes
-	const parts = raw.match(/('[^']*')|[^,]+/g); //Ignore ',' within the double quotes
-	// parts === null
-	if (!parts) {
-		return list;
-	}
-
-	for (let i = 0; i < parts.length; i++) {
-		const address: EmailAddress = {
-			name: '',
-			email: '',
-		};
-		const partsStr = unquoteString(parts[i]);
-		//Quoted name but without the e-mail address
-		if (/^'.*'$/g.test(partsStr)) {
-			address.name = partsStr.replace(/'/g, '').trim();
-			i++; //Shift to another part to capture e-mail address
-		}
-
-		const regex = /^(.*?)(\s*\<(.*?)\>)$/g;
-		const match = regex.exec(partsStr);
-		if (match) {
-			const name = match[1].replace(/'/g, '').trim();
-			if (name && name.length) {
-				address.name = name;
-			}
-			address.email = match[3].trim();
-			list.push(address);
-		} else {
-			//E-mail address only (without the name)
-			address.email = partsStr.trim();
-			list.push(address);
-		}
-	}
+function getEmailAddress(rawStr: string): EmailAddress | EmailAddress[] | null {
+	const raw = unquoteString(rawStr);
+	const parseList = addressparser(raw)
+	const list = parseList.map(v => ({name: v.name, email: v.address} as EmailAddress))
 
 	//Return result
 	if (list.length === 0) {
@@ -396,7 +258,7 @@ function parse(
  * @returns {ParsedEmlJson}
  */
 function parseRecursive(lines: string[], start: number, parent: any, options: Options) {
-	let boundary = null;
+	let boundary:any = null;
 	let lastHeaderName = '';
 	let findBoundary = '';
 	let insideBody = false;
@@ -987,7 +849,7 @@ function read(
 			result.headers = data.headers;
 
 			//Content mime type
-			let boundary = null;
+			let boundary:any = null;
 			const ct = data.headers['Content-Type'] || data.headers['Content-type'];
 			if (ct && /^multipart\//g.test(ct)) {
 				const b = getBoundary(ct);

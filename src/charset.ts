@@ -10,7 +10,7 @@ export const encode = (str: string, fromCharset = 'utf-8'): Uint8Array => new Te
 
 export const arr2str = (arr: Uint8Array) => {
 	const CHUNK_SZ = 0x8000;
-	const strs = [];
+	const strs = [] as any[];
 
 	for (let i = 0; i < arr.length; i += CHUNK_SZ) {
 		strs.push(String.fromCharCode.apply(null, arr.subarray(i, i + CHUNK_SZ) as any));

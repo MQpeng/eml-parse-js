@@ -39,6 +39,7 @@
 		],
 		"no-useless-escape": "off",
 		"no-extra-boolean-cast": "off",
-		"no-prototype-builtins":"off"
+		"no-prototype-builtins":"off",
+		"no-unused-vars": "off"
 	}
 }

@@ -91,6 +91,14 @@ describe('readEml should decode', () => {
     expect(readEmlJson.to.email).to.equal('dummyEmail2@emailClient.com');
   })
 
+  it('to and from correctly(#40)', () => {
+		const readEmlJson = readEmlForTest('./fixtures/spam.eml');
+    expect(readEmlJson.from.name).to.equal('Matilda, Klein');
+    expect(readEmlJson.from.email).to.equal('noreply@guide-des-vins-de-bourgogne.fr');
+    expect(readEmlJson.to.name).to.equal('');
+    expect(readEmlJson.to.email).to.equal('leon.struck@web.de');
+	});
+
   it('cc recepient', () => {
     const readEmlJson = readEmlForTest('./fixtures/multipleRecipientsEmail.eml');
     expect(readEmlJson.cc).to.exist;

@@ -39,6 +39,7 @@
 		"dist/index.d.ts",
 		"dist/charset.d.ts",
 		"dist/utils.d.ts",
+		"dist/interface.d.ts",
 		"src",
 		"lib",
 		"LICENSE"

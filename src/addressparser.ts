@@ -12,7 +12,7 @@ function _handleAddress(tokens) {
 	let state = 'text';
 	let address;
 	let addresses = [] as any[];
-	let data:any = {
+	let data: any = {
 		address: [],
 		comment: [],
 		group: [],
@@ -139,13 +139,13 @@ function _handleAddress(tokens) {
  * @param {String} str Address field string
  */
 export class Tokenizer {
-    str: string;
-    operatorCurrent: string;
-    operatorExpecting: string;
-    node: any
-    escaped: boolean;
-    list: any[]
-    operators: any
+	str: string;
+	operatorCurrent: string;
+	operatorExpecting: string;
+	node: any;
+	escaped: boolean;
+	list: any[];
+	operators: any;
 	constructor(str) {
 		this.str = (str || '').toString();
 		this.operatorCurrent = '';
@@ -180,13 +180,13 @@ export class Tokenizer {
 	 */
 	tokenize() {
 		let chr,
-			list:any[] = [];
+			list: any[] = [];
 		for (let i = 0, len = this.str.length; i < len; i++) {
 			chr = this.str.charAt(i);
 			this.checkChar(chr);
 		}
 
-		this.list.forEach((node) => {
+		this.list.forEach(node => {
 			node.value = (node.value || '').toString().trim();
 			if (node.value) {
 				list.push(node);
@@ -266,7 +266,7 @@ export class Tokenizer {
  * @param {String} str Address field
  * @return {Array} An array of address objects
  */
-export function addressparser(str, options?: any): { name?: string; address?:string}[] {
+export function addressparser(str, options?: any): { name?: string; address?: string }[] {
 	options = options || {};
 
 	let tokenizer = new Tokenizer(str);

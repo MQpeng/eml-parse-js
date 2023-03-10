@@ -6,7 +6,7 @@
 import { Base64 } from 'js-base64';
 
 import { convert, decode, encode } from './charset';
-import { GB2312UTF8, getCharsetName, guid, mimeDecode, wrap } from './utils';
+import { GB2312UTF8, getCharsetName, guid, mimeDecode, wrap, getBoundary } from './utils';
 import {
 	KeyValue,
 	EmailAddress,
@@ -92,16 +92,6 @@ function toEmailAddress(data?: string | EmailAddress | EmailAddress[] | null): s
 }
 
 /**
- * Gets the boundary name
- * @param {String} contentType
- * @returns {String|undefined}
- */
-function getBoundary(contentType: string) {
-	const match = /boundary="?(.+?)"?(\s*;[\s\S]*)?$/g.exec(contentType);
-	return match ? match[1] : undefined;
-}
-
-/**
  * Gets character set name, e.g. contentType='.....charset='iso-8859-2'....'
  * @param {String} contentType
  * @returns {String|undefined}
@@ -118,8 +108,8 @@ function getCharset(contentType: string) {
  */
 function getEmailAddress(rawStr: string): EmailAddress | EmailAddress[] | null {
 	const raw = unquoteString(rawStr);
-	const parseList = addressparser(raw)
-	const list = parseList.map(v => ({name: v.name, email: v.address} as EmailAddress))
+	const parseList = addressparser(raw);
+	const list = parseList.map(v => ({ name: v.name, email: v.address } as EmailAddress));
 
 	//Return result
 	if (list.length === 0) {
@@ -258,7 +248,7 @@ function parse(
  * @returns {ParsedEmlJson}
  */
 function parseRecursive(lines: string[], start: number, parent: any, options: Options) {
-	let boundary:any = null;
+	let boundary: any = null;
 	let lastHeaderName = '';
 	let findBoundary = '';
 	let insideBody = false;
@@ -291,7 +281,7 @@ function parseRecursive(lines: string[], start: number, parent: any, options: Op
 				}
 
 				//Expected boundary
-				let ct = parent.headers['Content-Type'];
+				let ct = parent.headers['Content-Type'] || parent.headers['Content-type'];
 				if (ct && /^multipart\//g.test(ct)) {
 					let b = getBoundary(ct);
 					if (b && b.length) {
@@ -694,7 +684,7 @@ function read(
 	//Appends the boundary to the result
 	function _append(headers: EmlHeaders, content: string | Uint8Array | Attachment, result: ReadedEmlJson) {
 		const contentType = headers['Content-Type'] || headers['Content-type'];
-		const contentDisposition = headers['Content-Disposition']
+		const contentDisposition = headers['Content-Disposition'];
 
 		const charset = getCharsetName(getCharset(contentType as string) || defaultCharset);
 		let encoding = headers['Content-Transfer-Encoding'] || headers['Content-transfer-encoding'];
@@ -726,8 +716,7 @@ function read(
 			try {
 				if (encoding === 'base64') {
 					htmlContent = Base64.decode(htmlContent);
-				}
-				else if (Base64.btoa(Base64.atob(htmlContent)) == htmlContent) {
+				} else if (Base64.btoa(Base64.atob(htmlContent)) == htmlContent) {
 					htmlContent = Base64.atob(htmlContent);
 				}
 			} catch (error) {
@@ -849,7 +838,7 @@ function read(
 			result.headers = data.headers;
 
 			//Content mime type
-			let boundary:any = null;
+			let boundary: any = null;
 			const ct = data.headers['Content-Type'] || data.headers['Content-type'];
 			if (ct && /^multipart\//g.test(ct)) {
 				const b = getBoundary(ct);

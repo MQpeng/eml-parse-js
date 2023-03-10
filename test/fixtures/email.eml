@@ -1,0 +1,48 @@
+MIME-Version: 1.0
+Date: Thu, 29 Sep 2022 12:22:20 +0100
+Message-ID:
+  <CAGFso0R6WbMomMx6mFFJzt_wiL8wRm3sN0YQwXz12Ugbt72XSw@mail.gmail.com>
+Subject: A subject with spaces
+From: =?UTF-8?Q?Nobody_there?= <dummyEmail@emailClient.com>
+To: =?UTF-8?Q?Nobody_here?= <dummyEmail2@emailClient.com>
+
+
+
+Content-type: multipart/related; 
+	Boundary="0__=4EBB03D9DFA98AD48f9e8a93df938690918c4EBB03D9DFA98AD4"
+
+--0__=4EBB03D9DFA98AD48f9e8a93df938690918c4EBB03D9DFA98AD4
+Content-type: multipart/alternative; 
+	Boundary="1__=4EBB03D9DFA98AD48f9e8a93df938690918c4EBB03D9DFA98AD4"
+
+--1__=4EBB03D9DFA98AD48f9e8a93df938690918c4EBB03D9DFA98AD4
+Content-transfer-encoding: quoted-printable
+Content-type: text/plain; charset=ISO-8859-1
+
+This is a test
+=
+
+--1__=4EBB03D9DFA98AD48f9e8a93df938690918c4EBB03D9DFA98AD4
+Content-transfer-encoding: quoted-printable
+Content-type: text/html; charset=ISO-8859-1
+
+<html><body>
+<p><font size=3D"2" face=3D"sans-serif">This is a test</font><br>
+</body></html>=
+
+
+--1__=4EBB03D9DFA98AD48f9e8a93df938690918c4EBB03D9DFA98AD4--
+
+
+--0__=4EBB03D9DFA98AD48f9e8a93df938690918c4EBB03D9DFA98AD4
+Content-type: image/gif; 
+	name="ecblank.gif"
+Content-Disposition: inline; filename="ecblank.gif"
+Content-ID: <1__=4EBB03D9DFA98AD48f9e8a93df938690918c4EBB03D9DFA98AD4@gmail.com>
+Content-Transfer-Encoding: base64
+
+R0lGODlhEAABAIAAAAAAAP///yH5BAEAAAEALAAAAAAAAAAQAAEAAAIEjI8ZBQA7
+
+
+--0__=4EBB03D9DFA98AD48f9e8a93df938690918c4EBB03D9DFA98AD4--
+

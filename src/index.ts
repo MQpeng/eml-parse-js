@@ -255,6 +255,8 @@ function parseRecursive(lines: string[], start: number, parent: any, options: Op
 	let insideBoundary = false;
 	let isMultiHeader = false;
 	let isMultipart = false;
+	let checkedForCt = false;
+	let ctInBody = false;
 
 	parent.headers = {};
 	//parent.body = null;
@@ -282,7 +284,22 @@ function parseRecursive(lines: string[], start: number, parent: any, options: Op
 
 				//Expected boundary
 				let ct = parent.headers['Content-Type'] || parent.headers['Content-type'];
-				if (ct && /^multipart\//g.test(ct)) {
+				if (!ct) {
+					if (checkedForCt) {
+						insideBody = !ctInBody;
+					} else {
+						checkedForCt = true;
+						const lineClone = Array.from(lines);
+						const string = lineClone.splice(i).join('\r\n');
+						const trimmedStrin = string.trim();
+						if (trimmedStrin.indexOf('Content-Type') === 0 || trimmedStrin.indexOf('Content-type') === 0) {
+							insideBody = false;
+							ctInBody = true;
+						} else {
+							console.warn('Warning: undefined Content-Type')
+						}
+					}
+				} else if (/^multipart\//g.test(ct)) {
 					let b = getBoundary(ct);
 					if (b && b.length) {
 						findBoundary = b;

@@ -150,4 +150,10 @@ describe('readEml should decode', () => {
     expect(readEmlJson.html).to.contain('Little body');
     expect(readEmlJson.text).to.contain('Little body');
 	});
+
+  it('test', () => {
+    const readEmlJson = readEmlForTest('./fixtures/email.eml');
+    expect(readEmlJson.text).to.contain('This is a test')
+    expect(readEmlJson.html).to.contain('This is a test');
+  })
 })

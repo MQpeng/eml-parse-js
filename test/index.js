@@ -150,4 +150,10 @@ describe('readEml should decode', () => {
     expect(readEmlJson.html).to.contain('Little body');
     expect(readEmlJson.text).to.contain('Little body');
 	});
+
+  it('should decode email with line break in between content type and rest of headers', () => {
+    const readEmlJson = readEmlForTest('./fixtures/emailWithSeperateContentType.eml');
+    expect(readEmlJson.text).to.contain('This is a test')
+    expect(readEmlJson.html).to.contain('This is a test');
+  })
 })

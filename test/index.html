@@ -1,0 +1,32 @@
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>EML-Parse-JS</title>
+  <script src="https://cdn.jsdelivr.net/npm/js-base64@3.7.5/base64.min.js"></script>
+  <script src="../lib/bundle.umd.js" type="text/javascript"></script>
+</head>
+<body>
+  <div class="col-md-9">
+    <input id="file" name="file" type="file">
+    <span class="textblock" id="sourcetext">(EML)</span>
+    <div id="result"></div>
+  </div>
+  <script>
+    document.addEventListener("DOMContentLoaded", function(event) {
+      const fileInput = document.getElementById('file');
+      fileInput.onchange = () => {
+        const selectedFile = fileInput.files[0];
+        let reader = new FileReader();
+        reader.onload = function(){
+          const parsedEml = EmlParseJs.readEml(this.result);
+          console.log(parsedEml)
+          document.getElementById('result').innerHTML = parsedEml.html
+        };
+        reader.readAsText(selectedFile)
+      }
+    });
+  </script>
+</body>
+</html>

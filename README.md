@@ -12,7 +12,7 @@ import { parseEml, readEml, GBKUTF8, decode } from 'eml-parse-js';
 
 // const eml = await axios(http | ajax).get()
 // `.eml` file 
-readEml(eml, (err, ReadedEmlJson) => {
+readEml(eml, (err, ReadEmlJson) => {
   
 });
 ```
@@ -33,7 +33,7 @@ interface Attachment {
 	cid?: string;
 }
 
-interface ReadedEmlJson {
+interface ReadEmlJson {
   attachments: Attachment
 	date: Date | string;
 	subject: string;

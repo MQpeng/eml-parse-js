@@ -10,7 +10,7 @@
 	"types": "./dist/index.d.ts",
 	"exports": {
 		".": {
-			"types": "./types/index.d.ts",
+			"types": "./dist/index.d.ts",
 			"node": "./lib/bundle.cjs.js",
 			"require": "./lib/bundle.cjs.js",
 			"es2015": "./lib/bundle.esm.js",

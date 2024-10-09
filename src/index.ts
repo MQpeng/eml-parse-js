@@ -353,7 +353,7 @@ function parseRecursive(lines: string[], start: number, parent: any, options: Op
 
 				//Updated on 2019-10-12: A line before the boundary marker is not required to be an empty line
 				//if (lines[i - 1] == "" && line.indexOf("--" + findBoundary) == 0 && !/\-\-(\r?\n)?$/g.test(line)) {
-				if (line.indexOf('--' + findBoundary) == 0 && !/\-\-(\r?\n)?$/g.test(line)) {
+				if (line.indexOf('--' + findBoundary) == 0 && line.indexOf('--' + findBoundary + '--') !== 0) {
 					insideBoundary = true;
 
 					//Complete the previous boundary

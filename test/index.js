@@ -153,7 +153,13 @@ describe('readEml should decode', () => {
 
   it('should decode email with line break in between content type and rest of headers', () => {
     const readEmlJson = readEmlForTest('./fixtures/emailWithSeperateContentType.eml');
-    expect(readEmlJson.text).to.contain('This is a test')
+    expect(readEmlJson.text).to.contain('This is a test');
     expect(readEmlJson.html).to.contain('This is a test');
+  })
+
+  it('should decode mhtml with separator that is surrounded by "--"', () => {
+    const readEmlJson = readEmlForTest('./fixtures/savedWebpage.mhtml');
+    expect(readEmlJson.text).to.be.undefined;
+    expect(readEmlJson.html).to.contain('The URI of an MHTML aggregate is not the same as the URI of its root');
   })
 })

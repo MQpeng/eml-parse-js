@@ -20,6 +20,7 @@ import {
 	OptionOrNull,
 	BoundaryRawData,
 	BoundaryConvertedData,
+	BoundaryHeaders,
 } from './interface';
 import { addressparser } from './addressparser';
 
@@ -966,6 +967,11 @@ export {
 	encode,
 	decode,
 	completeBoundary,
+	ParsedEmlJson,
+	ReadedEmlJson,
+	EmailAddress,
+	Attachment,
+	BoundaryHeaders,
 	parse as parseEml,
 	read as readEml,
 	build as buildEml,

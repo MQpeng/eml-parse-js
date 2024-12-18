@@ -1,48 +1,36 @@
 {
 	"name": "eml-parse-js",
-	"version": "1.1.15",
+	"version": "1.2.0-beta.0",
 	"description": "format EML file in browser env",
-	"main": "./lib/bundle.umd.js",
-	"module": "./lib/bundle.esm.js",
-	"es2015": "./lib/bundle.esm.js",
-	"esm5": "./lib/bundle.esm.js",
+	"main": "./dist/index.cjs.js",
+	"module": "./dist/index.es.js",
+	"browser": "./dist/index.umd.js",
 	"typings": "./dist/index.d.ts",
 	"types": "./dist/index.d.ts",
 	"exports": {
 		".": {
 			"types": "./dist/index.d.ts",
-			"node": "./lib/bundle.cjs.js",
-			"require": "./lib/bundle.cjs.js",
-			"es2015": "./lib/bundle.esm.js",
-			"default": "./lib/bundle.esm.js"
+			"node": "./dist/index.cjs.js",
+			"import": "./dist/index.es.js",
+			"require": "./dist/index.cjs.js",
+			"default": "./dist/index.es.js"
 		}
 	},
 	"scripts": {
-		"build": "tsc",
-		"build:es": "tsc -p ./tsconfig.es2015.json",
-		"build:umd": "tsc -p ./tsconfig.umd.json",
-		"build:amd": "tsc -p ./tsconfig.amd.json",
-		"build:ts": "npm run clean:dist && npm run build && npm run build:es -- --declaration false && npm run build:umd -- --declaration false && npm run build:amd",
-		"build:rollup": "rollup --config",
-		"build:publish": "npm run clean:dist && npm run build && npm run build:rollup",
+		"build": "vite build",
+		"build:publish": "npm run clean:dist && npm run build",
 		"clean:dist": "rimraf dist",
 		"eslint:init": "eslint --init",
 		"lint:ci": "eslint --ext .ts src/",
 		"lint": "eslint --fix --ext .ts src/",
-		"link:lib": "rimraf node_modules/eml-format-js && linklocal",
+		"link:lib": "rimraf node_modules/eml-parse-js && linklocal",
 		"prettier": "prettier --parser typescript --write src/*ts && npm run lint",
 		"prepublishOnly": "npm run prettier && npm run build:publish && npm run test",
 		"test": "mocha --reporter spec",
-		"ci": "npm install"
+		"ci": "npm install -g pnpm && pnpm install"
 	},
 	"files": [
-		"dist/index.d.ts",
-		"dist/charset.d.ts",
-		"dist/utils.d.ts",
-		"dist/interface.d.ts",
-		"dist/addressparser.d.ts",
-		"src",
-		"lib",
+		"dist",
 		"LICENSE"
 	],
 	"private": false,
@@ -65,44 +53,36 @@
 	"homepage": "https://github.com/MQpeng/eml-parse-js#readme",
 	"contributors": [
 		{
-			"name" : "Charlie Harding",
-			"url" : "https://github.com/c-harding"
+			"name": "Charlie Harding",
+			"url": "https://github.com/c-harding"
 		},
 		{
-			"name" : "Pádraig Weeks",
-			"url" : "https://github.com/pmweeks98"
+			"name": "Pádraig Weeks",
+			"url": "https://github.com/pmweeks98"
 		},
 		{
-			"name" : "Thomas Oeser",
-			"url" : "https://github.com/thomasoeser"
+			"name": "Thomas Oeser",
+			"url": "https://github.com/thomasoeser"
 		},
 		{
-			"name" : "Robert Scheinpflug",
-			"url" : "https://github.com/neversun"
+			"name": "Robert Scheinpflug",
+			"url": "https://github.com/neversun"
 		},
 		{
-			"name" : "Bean Q",
-			"url" : "https://github.com/MQpeng"
+			"name": "Bean Q",
+			"url": "https://github.com/MQpeng"
 		}
 	],
 	"devDependencies": {
-		"@types/node": "^17.0.21",
-		"@types/ramda": "^0.26.36",
-		"@typescript-eslint/eslint-plugin": "^2.11.0",
-		"@typescript-eslint/parser": "^2.11.0",
 		"chai": "^4.2.0",
-		"eslint": "^6.7.2",
-		"eslint-plugin-prettier": "^3.1.1",
+		"iconv-lite": "^0.6.3",
 		"linklocal": "^2.8.2",
-		"lint-staged": "^10.5.3",
 		"mocha": "^6.2.2",
 		"prettier": "1.19.1",
-		"rimraf": "^3.0.0",
-		"rollup": "^1.27.12",
-		"rollup-plugin-commonjs": "^10.1.0",
-		"rollup-plugin-node-resolve": "^5.2.0",
-		"rollup-plugin-typescript": "^1.0.1",
-		"typescript": "^3.7.3"
+		"rimraf": "^6.0.1",
+		"typescript": "^5.7.2",
+		"vite": "^6.0.3",
+		"vite-plugin-dts": "^4.3.0"
 	},
 	"dependencies": {
 		"@sinonjs/text-encoding": "^0.7.2",

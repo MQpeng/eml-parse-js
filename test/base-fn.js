@@ -25,7 +25,7 @@ const {
   getCharset,
   toEmailAddress,
   GBKUTF8,
-} = require('../lib/bundle.cjs');
+} = require('eml-parse-js');
 // const EmlFormat =  require('../src/index.ts').default;
 // const {getEmailAddress, unquoteString} = EmlFormat;
 

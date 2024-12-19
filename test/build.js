@@ -9,7 +9,7 @@ const {
   readEml,
   parseEml,
   buildEml
-} = require('../dist/index.js')
+} = require('eml-parse-js')
 
 function _read(strOrObj, fileName) {
   readEml(strOrObj, function (error, data) {

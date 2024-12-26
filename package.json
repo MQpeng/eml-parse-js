@@ -1,6 +1,6 @@
 {
 	"name": "eml-parse-js",
-	"version": "1.1.15",
+	"version": "1.1.16",
 	"description": "format EML file in browser env",
 	"main": "./lib/bundle.umd.js",
 	"module": "./lib/bundle.esm.js",
@@ -65,24 +65,24 @@
 	"homepage": "https://github.com/MQpeng/eml-parse-js#readme",
 	"contributors": [
 		{
-			"name" : "Charlie Harding",
-			"url" : "https://github.com/c-harding"
+			"name": "Charlie Harding",
+			"url": "https://github.com/c-harding"
 		},
 		{
-			"name" : "Pádraig Weeks",
-			"url" : "https://github.com/pmweeks98"
+			"name": "Pádraig Weeks",
+			"url": "https://github.com/pmweeks98"
 		},
 		{
-			"name" : "Thomas Oeser",
-			"url" : "https://github.com/thomasoeser"
+			"name": "Thomas Oeser",
+			"url": "https://github.com/thomasoeser"
 		},
 		{
-			"name" : "Robert Scheinpflug",
-			"url" : "https://github.com/neversun"
+			"name": "Robert Scheinpflug",
+			"url": "https://github.com/neversun"
 		},
 		{
-			"name" : "Bean Q",
-			"url" : "https://github.com/MQpeng"
+			"name": "Bean Q",
+			"url": "https://github.com/MQpeng"
 		}
 	],
 	"devDependencies": {

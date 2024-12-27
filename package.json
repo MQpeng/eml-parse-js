@@ -21,13 +21,11 @@
 		"build:publish": "npm run clean:dist && npm run build",
 		"clean:dist": "rimraf dist",
 		"eslint:init": "eslint --init",
-		"lint:ci": "eslint --ext .ts src/",
-		"lint": "eslint --fix --ext .ts src/",
+		"lint": "eslint --cache --fix src",
 		"link:lib": "rimraf node_modules/eml-parse-js && linklocal",
 		"prettier": "prettier --parser typescript --write src/*ts && npm run lint",
 		"prepublishOnly": "npm run prettier && npm run build:publish && npm run test",
-		"test": "mocha --reporter spec",
-		"ci": "npm install -g pnpm && pnpm install"
+		"test": "mocha --reporter spec"
 	},
 	"files": [
 		"dist",
@@ -74,17 +72,18 @@
 		}
 	],
 	"devDependencies": {
-		"@typescript-eslint/eslint-plugin": "^2.11.0",
-		"@typescript-eslint/parser": "^2.11.0",
+		"@eslint/eslintrc": "^3.2.0",
+		"@eslint/js": "^9.17.0",
 		"chai": "^4.2.0",
-		"eslint": "^6.7.2",
-		"eslint-plugin-prettier": "^3.1.1",
+		"eslint": "^9.17.0",
+		"globals": "^15.14.0",
 		"iconv-lite": "^0.6.3",
 		"linklocal": "^2.8.2",
 		"mocha": "^6.2.2",
-		"prettier": "1.19.1",
+		"prettier": "^3.4.2",
 		"rimraf": "^6.0.1",
 		"typescript": "^5.7.2",
+		"typescript-eslint": "^8.18.2",
 		"vite": "^6.0.3",
 		"vite-plugin-dts": "^4.3.0"
 	},
@@ -101,5 +100,6 @@
 			"prettier --parser typescript --write",
 			"git add"
 		]
-	}
+	},
+	"packageManager": "pnpm@9.15.1"
 }

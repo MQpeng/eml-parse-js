@@ -42,7 +42,7 @@ const fileExtensions: KeyValue = {
  * @param {String} mimeType
  * @returns {String}
  */
-// eslint-disable-next-line no-unused-vars
+
 function getFileExtension(mimeType: string): string {
 	return fileExtensions[mimeType] || '';
 }
@@ -66,7 +66,7 @@ function toEmailAddress(data?: string | EmailAddress | EmailAddress[] | null): s
 	} else if (typeof data === 'object') {
 		if (Array.isArray(data)) {
 			email += data
-				.map(item => {
+				.map((item) => {
 					let str = '';
 					if (item.name) {
 						str += '"' + item.name.replace(/^"|"\s*$/g, '') + '" ';
@@ -76,7 +76,7 @@ function toEmailAddress(data?: string | EmailAddress | EmailAddress[] | null): s
 					}
 					return str;
 				})
-				.filter(a => a)
+				.filter((a) => a)
 				.join(', ');
 		} else {
 			if (data) {
@@ -110,7 +110,7 @@ function getCharset(contentType: string) {
 function getEmailAddress(rawStr: string): EmailAddress | EmailAddress[] | null {
 	const raw = unquoteString(rawStr);
 	const parseList = addressparser(raw);
-	const list = parseList.map(v => ({ name: v.name, email: v.address } as EmailAddress));
+	const list = parseList.map((v) => ({ name: v.name, email: v.address }) as EmailAddress);
 
 	//Return result
 	if (list.length === 0) {
@@ -158,7 +158,7 @@ function unquoteString(str: string): string {
 	let decodedString = str || '';
 	const spinOffMatch = decodedString.match(regex);
 	if (spinOffMatch) {
-		spinOffMatch.forEach(spin => {
+		spinOffMatch.forEach((spin) => {
 			decodedString = decodedString.replace(spin, decodeJoint(spin));
 		});
 	}
@@ -297,7 +297,7 @@ function parseRecursive(lines: string[], start: number, parent: any, options: Op
 							insideBody = false;
 							ctInBody = true;
 						} else {
-							console.warn('Warning: undefined Content-Type')
+							console.warn('Warning: undefined Content-Type');
 						}
 					}
 				} else if (/^multipart\//g.test(ct)) {
@@ -794,7 +794,7 @@ function read(
 					result_name = name
 						.replace(/(\s|'|utf-8|\*[0-9]\*)/g, '')
 						.split(';')
-						.map(v => /name[\*]?="?(.+?)"?$/gi.exec(v))
+						.map((v) => /name[\*]?="?(.+?)"?$/gi.exec(v))
 						.reduce((a, b) => {
 							if (b && b[1]) {
 								a += b[1];

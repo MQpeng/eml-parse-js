@@ -73,7 +73,7 @@ function _handleAddress(tokens) {
 				}
 			}
 
-			let _regexHandler = function(address) {
+			let _regexHandler = function (address) {
 				if (!data.address.length) {
 					data.address = [address.trim()];
 					return ' ';
@@ -186,7 +186,7 @@ export class Tokenizer {
 			this.checkChar(chr);
 		}
 
-		this.list.forEach(node => {
+		this.list.forEach((node) => {
 			node.value = (node.value || '').toString().trim();
 			if (node.value) {
 				list.push(node);
@@ -276,7 +276,7 @@ export function addressparser(str, options?: any): { name?: string; address?: st
 	let address = [] as any[];
 	let parsedAddresses = [] as any[];
 
-	tokens.forEach(token => {
+	tokens.forEach((token) => {
 		if (token.type === 'operator' && (token.value === ',' || token.value === ';')) {
 			if (address.length) {
 				addresses.push(address);
@@ -291,7 +291,7 @@ export function addressparser(str, options?: any): { name?: string; address?: st
 		addresses.push(address);
 	}
 
-	addresses.forEach(address => {
+	addresses.forEach((address) => {
 		address = _handleAddress(address);
 		if (address.length) {
 			parsedAddresses = parsedAddresses.concat(address);
@@ -300,8 +300,8 @@ export function addressparser(str, options?: any): { name?: string; address?: st
 
 	if (options.flatten) {
 		let addresses = [] as any[];
-		let walkAddressList = list => {
-			list.forEach(address => {
+		let walkAddressList = (list) => {
+			list.forEach((address) => {
 				if (address.group) {
 					return walkAddressList(address.group);
 				} else {

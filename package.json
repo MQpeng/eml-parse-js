@@ -100,5 +100,6 @@
 			"prettier --parser typescript --write",
 			"git add"
 		]
-	}
+	},
+	"packageManager": "pnpm@9.15.1"
 }

@@ -15,7 +15,7 @@ export function getCharsetName(charset: string) {
 //Generates a random id
 export function guid() {
 	return 'xxxxxxxxxxxx-4xxx-yxxx-xxxxxxxxxxxx'
-		.replace(/[xy]/g, function(c) {
+		.replace(/[xy]/g, function (c) {
 			const r = (Math.random() * 16) | 0,
 				v = c == 'x' ? r : (r & 0x3) | 0x8;
 			return v.toString(16);
@@ -69,7 +69,7 @@ export function isStringOrError(param: any) {
  * converting strings from gbk to utf-8
  */
 export const GB2312UTF8 = {
-	Dig2Dec: function(s: string) {
+	Dig2Dec: function (s: string) {
 		let retV = 0;
 		if (s.length == 4) {
 			for (let i = 0; i < 4; i++) {
@@ -80,7 +80,7 @@ export const GB2312UTF8 = {
 		return -1;
 	},
 
-	Hex2Utf8: function(s: string) {
+	Hex2Utf8: function (s: string) {
 		let retS = '';
 		let tempS = '';
 		let ss = '';
@@ -100,7 +100,7 @@ export const GB2312UTF8 = {
 		return '';
 	},
 
-	Dec2Dig: function(n1: number) {
+	Dec2Dig: function (n1: number) {
 		let s = '';
 		let n2 = 0;
 		for (let i = 0; i < 4; i++) {
@@ -115,7 +115,7 @@ export const GB2312UTF8 = {
 		return s;
 	},
 
-	Str2Hex: function(s: string) {
+	Str2Hex: function (s: string) {
 		let c = '';
 		let n;
 		let ss = '0123456789ABCDEF';
@@ -128,7 +128,7 @@ export const GB2312UTF8 = {
 		return digS;
 	},
 
-	GB2312ToUTF8: function(s1: string) {
+	GB2312ToUTF8: function (s1: string) {
 		let s = escape(s1);
 		let sa = s.split('%');
 		let retV = '';
@@ -151,7 +151,7 @@ export const GB2312UTF8 = {
 		return retV;
 	},
 
-	UTF8ToGB2312: function(str1: string) {
+	UTF8ToGB2312: function (str1: string) {
 		let substr = '';
 		let a = '';
 		let b = '';

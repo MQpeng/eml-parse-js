@@ -27,7 +27,7 @@ jobs:
         node-version: ${{ matrix.node-version }}
         cache: 'npm'
     - name: Install pnpm
-        uses: pnpm/action-setup@v4.0.0
+      uses: pnpm/action-setup@v4.0.0
     - run: pnpm build
     - run: pnpm lint:ci
     - run: pnpm build:publish

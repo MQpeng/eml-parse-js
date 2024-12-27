@@ -31,6 +31,6 @@ jobs:
     - name: Install deps
       run: pnpm install
     - run: pnpm build
-    - run: pnpm lint:ci
+    - run: pnpm lint
     - run: pnpm build:publish
     - run: pnpm test

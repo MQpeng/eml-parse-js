@@ -52,3 +52,5 @@ Thumbs.db
 /test/parsed
 /test/readed
 /test/builded
+
+.eslintcache

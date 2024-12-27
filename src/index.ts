@@ -42,7 +42,7 @@ const fileExtensions: KeyValue = {
  * @param {String} mimeType
  * @returns {String}
  */
- 
+
 function getFileExtension(mimeType: string): string {
 	return fileExtensions[mimeType] || '';
 }

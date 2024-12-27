@@ -28,7 +28,8 @@ jobs:
         cache: 'npm'
     - name: Install pnpm
       uses: pnpm/action-setup@v4.0.0
-    - run: pnpm ci
+    - name: Install deps
+      run: pnpm install
     - run: pnpm build
     - run: pnpm lint:ci
     - run: pnpm build:publish

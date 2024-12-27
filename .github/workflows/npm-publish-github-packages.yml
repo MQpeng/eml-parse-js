@@ -17,7 +17,8 @@ jobs:
           node-version: 20
       - name: Install pnpm
         uses: pnpm/action-setup@v4.0.0
-      - run: pnpm ci
+      - name: Install deps
+        run: pnpm install
       - run: pnpm build:publish
       - run: pnpm test
 
@@ -35,7 +36,8 @@ jobs:
           registry-url: https://registry.npmjs.org/
       - name: Install pnpm
         uses: pnpm/action-setup@v4.0.0
-      - run: pnpm ci
+      - name: Install deps
+        run: pnpm install
       - run: npm publish
         env:
           NODE_AUTH_TOKEN: ${{secrets.NPM_TOKEN}}

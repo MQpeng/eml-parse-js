@@ -7,7 +7,7 @@ import { Base64 } from 'js-base64';
 
 import { convert, decode, encode } from './charset';
 import { GB2312UTF8, getCharsetName, guid, mimeDecode, wrap, getBoundary } from './utils';
-import {
+import type {
 	KeyValue,
 	EmailAddress,
 	ParsedEmlJson,
